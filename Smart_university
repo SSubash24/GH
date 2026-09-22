@@ -1,0 +1,183 @@
+Smart University Answer 
+ROLE 
+Act as a senior QA automation engineer, SDET, test architect, requirements analyst, and 
+debugging specialist working directly inside the current VS Code workspace. 
+You are completing an AI-assisted UI automation assessment for the SmartUniversity / 
+Rocky Global University web application. 
+Your implementation technology is strictly: 
+● Playwright 
+● TypeScript 
+● Page Object Model 
+● Reusable fixtures/helpers/utilities 
+● Playwright assertions 
+● Integrated VS Code terminal for execution 
+Your objective is NOT merely to generate code. 
+Your objective is to: 
+inspect → analyze → document → derive requirements → identify validation rules → 
+generate comprehensive test cases → implement automation → execute tests → 
+investigate failures → fix automation issues → re-run → identify genuine application 
+defects → document actual defects → perform final regression verification. 
+The final workspace must contain a complete, executable, maintainable solution satisfying 
+every assessment requirement. 
+ 
+You are assisting me with the SmartUniversity UI Automation assignment. Follow the 
+assignment exactly and work with the existing workspace. 
+1. Application Under Test 
+System: SmartUniversity (Rocky Global University) 
+URL: http://webapps.tekstac.com/SeleniumApp1/SmartUniversity 
+Login: Username: admin | Password: admin#123 
+There are 3 modules: 
+1. Login — login.html, US-01 to US-05 
+2. Add Student — add_stud.html, US-06 to US-13 
+3. Add Professor — add_prof.html, US-14 to US-21 
+Every module requires login using admin/admin#123. 
+2. Login/Captcha Flow 
+The login page contains username, password, dynamic arithmetic captcha, captcha result, 
+captcha input, remember-me and submit. 
+The captcha operation is dynamic, e.g. 98 + 65 =. The computed answer is displayed 
+on the page in a result box. Automation must read that displayed answer and enter it into 
+the captcha field. 
+For valid login, a browser alert "Login Successful" appears. Automation must 
+accept/dismiss the alert before the home page (index.html) loads. 
+After login: 
+● Students menu → Add Students → add_stud.html 
+● Professor menu → Add Professor → add_prof.html 
+Inspect all fields, element IDs, error-message elements, captcha behavior and validation 
+behavior before implementing tests. 
+3. Validation Rules 
+Login 
+● Username must equal admin 
+● Password must equal admin#123 
+● Captcha must equal displayed arithmetic answer 
+● Empty captcha → Captcha cannot be empty 
+● Wrong captcha → Invalid Captcha 
+Add Student 
+● Student Name: letters and spaces only 
+● Father Name: letters and spaces only 
+● Contact Number: exactly 10 digits 
+● Email ID: valid email format 
+● Department: valid option required 
+● Date of Birth: Day, Month and Year required 
+● Gender: exactly one of Male/Female 
+● Country/City/State: valid option required 
+● SSLC Mark: numeric percentage 0–100 
+● HSC Mark: numeric percentage 0–100 
+● Photo: must be uploaded 
+● All fields mandatory; empty submission must produce validation errors 
+Add Professor 
+● First Name: letters and spaces only 
+● Last Name: letters and spaces only 
+● Phone Number: exactly 10 digits 
+● Email ID: valid email format 
+● Department: valid option required 
+● Date of Birth: valid date required 
+● Gender: exactly one of Male/Female 
+● Qualification: at least one of M.E / Ph.D mandatory 
+● Country/City/State: valid option required 
+● Photo: must be dragged into the drop box 
+● All fields mandatory; empty submission must produce validation errors 
+4. Required Approach 
+Follow these assignment steps: 
+Step 1 — Login and Inspect All Three Modules 
+Open the application, login with admin/admin#123, read the dynamic captcha answer from 
+the page, enter it, handle the success alert, and inspect: 
+● Login fields, error messages and element IDs 
+● Add Student fields and element IDs 
+● Add Professor fields and element IDs 
+● Empty-form behavior 
+● Invalid-value behavior 
+● Captcha behavior and success alert 
+Step 2 — Acceptance Criteria 
+Create acceptance criteria for US-01 through US-20 based on the actual application, fields, 
+validation rules and expected behavior. 
+Save findings in: 
+Application Analysis & Requirements.txt 
+Step 3 — Validation Rules 
+Document all field-level validation rules for all three modules in: 
+Application Analysis & Requirements.txt 
+Step 4 — Test Case Generation 
+Generate at least 60 detailed test cases covering all 20 user stories across all 3 
+modules. 
+CSV required columns: 
+TC_ID, Module, User_Story_ID, Test_Scenario, Test_Type, Priority, 
+Precondition, Test_Steps, Test_Data, Expected_Result, Actual_Result, 
+Status 
+Priority values: 
+Critical, High, Medium, Low 
+Required distribution: 
+● 60–70% must be negative/validation tests 
+● Negative/validation tests should be Critical or High 
+● Positive/success tests should be Low 
+● Boundary tests should be Medium 
+Step 5 — Automation Code 
+Create a complete automation solution for all 3 modules. 
+Requirements: 
+● At least 20 automated test methods 
+● Every automated test must contain meaningful assertions 
+● Prioritize critical/high-risk validation scenarios 
+● Use Page Object Model for Login, Add Student and Add Professor 
+● Create a reusable login helper 
+● Login helper must handle dynamic captcha reading and success-alert handling 
+● Every module must perform login before navigation 
+● Reference the actual inspected element IDs and validation rules 
+● Use the existing workspace structure; do not change it 
+You may use Cypress, Playwright or Selenium in JavaScript, TypeScript, Python, Java or 
+C#/.NET, as appropriate for the existing workspace. 
+Step 6 — Execute and Refine 
+Execute the automation using the integrated VS Code terminal. 
+Do not simply assume tests pass. Use actual execution results to: 
+● Fix failures 
+● Correct assertions 
+● Improve selectors 
+● Improve coverage 
+● Refine the automation based on observed application behavior 
+Save files frequently using Ctrl+S. 
+Step 7 — Defect Detection 
+Defects must come from actual test execution, not AI predictions. 
+Document at least 8 validation defects across the modules in one file: 
+defect_report.json 
+Each defect must include: 
+● What was entered/test data 
+● What actually happened 
+● Expected result 
+● Severity 
+● Priority 
+5. Required Deliverables 
+The final workspace must contain: 
+1. Application Analysis & Requirements.txt 
+○ Application analysis 
+○ Login/captcha flow 
+○ Element IDs 
+○ Acceptance criteria for US-01 through US-20 
+○ Validation rules for all 3 modules 
+2. Test case CSV 
+○ At least 60 test cases 
+○ All 20 user stories covered 
+○ All 3 modules covered 
+○ Required columns included 
+○ 60–70% negative/validation coverage 
+3. Automation codebase 
+○ Page objects for Login, Add Student and Add Professor 
+○ Login helper with captcha + alert handling 
+○ At least 20 automated test methods 
+○ Meaningful assertions 
+4. defect_report.json 
+○ At least 8 defects 
+○ Across all modules 
+○ Based only on actual execution 
+○ Expected result, actual result, severity and priority included 
+Important Constraints 
+● Do NOT change the provided workspace structure. 
+● Do not create unnecessary/redundant files or folders. 
+● Keep the workspace clean and organized. 
+● Use the VS Code integrated terminal for test execution. 
+● Do not fabricate element IDs, validation behavior, test results or defects. 
+● Inspect the application first and base implementation on actual behavior. 
+● Use AI assistance, but ensure the analysis, requirements and prompts demonstrate 
+that I am directing the process. 
+● The final solution must satisfy the assignment's evaluation criteria, not merely 
+produce sample code. 
+Start by inspecting the existing workspace and application. Do not immediately 
+generate code. First determine the existing framework, files, structure, 
+selectors/element IDs and actual application behavior, then proceed through the 
+assignment steps in order. 
