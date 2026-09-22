@@ -1,0 +1,156 @@
+ROLE
+
+Act as a senior QA Automation Engineer, SDET, Test Architect, Requirements Analyst, and Debugging Specialist working directly inside the current VS Code workspace.
+
+You are completing an AI-assisted UI automation assessment for the Star Event Service – Event Management web application.
+
+Technology:
+- Playwright
+- TypeScript
+- Page Object Model
+- Reusable fixtures/helpers/utilities
+- Playwright assertions
+- Integrated VS Code terminal
+
+Objective:
+inspect → analyze → document → derive requirements → identify validations → create test cases → implement automation → execute → debug/fix → re-run → identify genuine defects → document defects → final regression verification.
+
+Do not merely generate code. The final workspace must contain a complete, executable and maintainable solution satisfying the assessment requirements.
+## Task
+
+Analyse the existing project workspace and complete the entire UI automation assessment exactly as specified below. Do not omit any task, deliverable, module, user story, validation rule, workflow step, or constraint.
+
+### Application
+Application: Star Event Service – Event Management
+URL: https://webapps.tekstac.com/SeleniumApp1/EventManagement/index.html
+
+Modules in scope:
+1. Event Booking – Event Booking form – US-01 to US-15
+2. Contact Us – Contact Us form – US-16 to US-21
+
+Refer to `User Stories.txt` in the workspace for the complete details of US-01 to US-21.
+
+### Technology
+Use Playwright with TypeScript and implement a clean Page Object Model framework with reusable helpers.
+
+### Assessment workflow — follow in order
+
+1. Inspect both Event Booking and Contact Us forms.
+   - Identify all HTML element IDs, field types and behaviours.
+   - Submit empty and invalid forms and observe the actual application behaviour.
+
+2. Create acceptance criteria for US-01 through US-21. Use the findings from the application and show that AI prompts are being used to derive the criteria.
+
+3. Identify and document all field-level validation rules for BOTH forms. Save the findings in:
+   `Application Analysis & Requirements.txt`
+
+4. Generate `testcases.csv`.
+   - Create 40–45 detailed test cases covering all 21 user stories and both modules.
+   - Use the acceptance criteria, element IDs and validation rules as context.
+   - Include user-story links.
+   - Use these columns:
+     `TC_ID, Module, User_Story_ID, Test_Scenario, Test_Type, Priority, Precondition, Test_Steps, Test_Data, Expected_Result, Actual_Result`
+   - Approximately 60–70% must be Negative/Validation scenarios with Critical or High priority.
+   - Boundary cases = Medium priority.
+   - Positive/Success cases = Low priority.
+
+5. Generate the complete automation codebase.
+   - Cover BOTH Event Booking and Contact Us.
+   - Implement at least 30 automated test methods with meaningful assertions.
+   - Prioritise critical/high-risk validations over happy paths.
+   - Navigate directly to the Event Management URL before interacting with either form.
+   - Use the discovered element IDs and validation rules.
+   - Use Page Objects and reusable utilities.
+   - No login helper is required.
+
+6. Run and refine.
+   - Execute the generated tests from the integrated VS Code terminal.
+   - Fix failures, incorrect assertions and improve coverage based on actual execution.
+   - Do not merely assume expected behaviour.
+
+7. Execute tests and document defects.
+   - Identify defects ONLY from actual test execution.
+   - Document exactly 8 validation defects.
+   - Save them in:
+     `defects/defect_report.json`
+   - Each defect must contain: what was entered, what happened/actual result, expected result, severity and priority.
+   - Do not create AI-predicted or hypothetical defects.
+
+### Required deliverables
+
+1. `Application Analysis & Requirements.txt`
+   - Analysis of BOTH modules
+   - Element IDs
+   - Acceptance criteria
+   - Validation rules
+
+2. `testcases.csv`
+   - 40–45 test cases
+   - All 21 user stories
+   - Both modules
+   - Required columns and priority/test distribution from Step 4
+
+3. Automation codebase
+   - Page Objects for Event Booking and Contact Us
+   - Reusable helper utilities
+   - Playwright + TypeScript
+   - At least 30 automated tests with assertions
+
+4. `defects/defect_report.json`
+   - Exactly 8 real validation defects
+   - Based only on actual execution
+   - Include entered data, actual behaviour, expected result, severity and priority
+
+### Validation rules
+
+Event Booking:
+- First Name: non-empty text
+- Last Name: non-empty text
+- Phone Number: non-empty text
+- Email ID: non-empty text
+- Event Type: select an option other than default "Select Event"
+- Event Date: non-empty text
+- Event Time: non-empty text
+- Guest Count: non-empty text
+- Catering: one radio option (Veg/NonVeg) must be selected
+- Address: non-empty text
+- City: select an option other than default "Select City"
+- Pincode: non-empty text
+- Event Details: provide event details; this is the only non-mandatory field
+
+Contact Us:
+- Name: non-empty text; application does not enforce letters-only
+- Email: non-empty text; although type=email, there is no `<form>` wrapper, so native browser email validation does not fire on click and the script layer performs no format check
+- Subject: non-empty text
+- Message: non-empty text
+- All 4 fields are mandatory
+
+Application behaviour:
+- Event Booking displays a confirmation message and appends submitted rows to a results table on the same page.
+- Contact Us displays a brief "please wait" message followed by a delayed confirmation message.
+
+### Workspace rules
+
+- Do NOT change the provided workspace structure.
+- Build the framework on top of the existing workspace.
+- Do not modify or delete existing files unless absolutely required by the assessment.
+- Avoid redundant files/folders and keep the workspace clean.
+- Follow standard naming conventions and framework-design practices.
+- Run tests from the integrated VS Code terminal.
+- Save frequently with Ctrl+S.
+
+### Evaluation process
+
+There are only 3 `Evaluate` attempts.
+
+Use them strategically:
+- Around 50% completion: run Evaluate and fix issues based on feedback.
+- Around 90% completion: run Evaluate again and refine.
+- After everything is complete: run the final Evaluate.
+Do not waste Evaluate attempts.
+
+### Important execution rule
+
+Do not invent element IDs, behaviours, validation results, acceptance criteria details or defects. Inspect the actual application/workspace first and use the real observed information. Preserve every requirement above while implementing the solution.
+
+First inspect the existing workspace and `User Stories.txt`, then implement the solution step by step. 
