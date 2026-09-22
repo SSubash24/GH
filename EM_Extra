@@ -1,0 +1,122 @@
+Continue from the CURRENT workspace state. Do NOT start over and do NOT redesign the project. Inspect what is already implemented and immediately complete/fix the missing assessment criteria. Time is limited, so prioritise implementation and execution over explanations.
+
+The assessment is Playwright + TypeScript for the Star Event Management application:
+https://webapps.tekstac.com/SeleniumApp1/EventManagement/index.html
+
+Scope:
+- Event Booking: US-01 to US-15
+- Contact Us: US-16 to US-21
+- Use User Stories.txt and the existing assessment requirements in the workspace as the source of truth.
+
+IMPORTANT: The previous attempt failed these evaluation areas. Make sure the CURRENT CODE explicitly satisfies them:
+
+1. AI Collaboration – Test Setup
+2. AI Collaboration – Element Identification
+3. AI Collaboration – Element Interaction
+4. AI Collaboration – Test Implementation
+5. AI Collaboration – Test Teardown
+6. AI Collaboration – Refinement & Validation
+7. Test Setup
+8. Element Locators & Interaction
+9. Test Method Implementation
+10. Teardown
+11. Assertions & Validations
+12. Reusability & Helper Methods
+13. Code Execution
+14. Defect Documentation
+
+ACTION PLAN:
+
+1. Inspect the existing files first. Reuse anything already correct.
+2. Ensure Playwright + TypeScript is properly configured and tests can run.
+3. Ensure Page Object Model is implemented for BOTH forms.
+4. Create/fix reusable helpers for navigation, filling fields, submission and common assertions.
+5. Use actual HTML element IDs/locators from the application. Do not invent selectors.
+6. Implement test methods covering BOTH modules, prioritising validation/negative scenarios.
+7. Every important test must contain clear assertions for the ACTUAL UI result:
+   - validation/required-field behaviour
+   - confirmation messages
+   - results-table behaviour for Event Booking
+   - delayed confirmation behaviour for Contact Us
+8. Add proper beforeEach/setup and afterEach/teardown where appropriate. Tests must be isolated and cleaned up correctly.
+9. Make test methods reusable and avoid duplicated locator/action code by keeping actions in Page Objects/helpers.
+10. Ensure assertions validate expected behaviour rather than only checking that an element exists.
+11. Run the tests NOW from the integrated terminal. Fix compilation, locator, timeout, assertion and execution failures.
+12. After execution, refine the failing tests based on ACTUAL results.
+13. Update/create the required assessment files without deleting existing valid work:
+   - Application Analysis & Requirements.txt
+   - testcases.csv with 40–45 cases covering US-01 to US-21
+   - defects/defect_report.json with EXACTLY 8 defects based ONLY on actual execution
+14. Each defect must include:
+   - what was entered
+   - actual result/what happened
+   - expected result
+   - severity
+   - priority
+15. Ensure the automation code contains at least 30 automated test methods with assertions across both modules.
+16. Ensure the test distribution remains approximately:
+   - 60–70% Negative/Validation = Critical/High
+   - Boundary = Medium
+   - Positive/Success = Low
+17. Navigate directly to the Event Management URL before interacting with either form.
+18. Do NOT create hypothetical/AI-predicted defects. Defects must come from observed execution.
+19. Keep the existing workspace structure clean. No unnecessary files or folders.
+20. Do not spend time explaining the implementation to me. Make the changes directly, run the tests, and fix as much as possible before finishing.
+
+CRITICAL FOR EVALUATION:
+The implementation must visibly demonstrate:
+- setup/configuration
+- element identification
+- reliable locators
+- element interaction
+- test implementation
+- assertions and validations
+- reusable Page Objects/helpers
+- test data handling
+- before/after setup and teardown
+- actual test execution
+- failure refinement
+- real defect documentation
+
+Do not stop after creating files. EXECUTE THE TESTS and fix failures.
+
+Start immediately by inspecting the current workspace and continue from the existing implementation.
+
+Continue from the CURRENT workspace. Do not restart or redesign. Inspect existing code and FIX/COMPLETE it immediately.
+
+This is a Playwright + TypeScript assessment for:
+https://webapps.tekstac.com/SeleniumApp1/EventManagement/index.html
+
+Scope: Event Booking US-01–US-15 and Contact Us US-16–US-21. Use User Stories.txt and the assessment requirements in the workspace as the source of truth.
+
+Make the existing solution satisfy ALL these evaluation areas:
+- AI collaboration: test setup, element identification, element interaction, test implementation, teardown, refinement/validation
+- Test setup/configuration
+- Actual element locators and interactions
+- Test method implementation
+- beforeEach/afterEach setup and teardown
+- Strong assertions and validations
+- Reusable Page Objects and helper methods
+- Test execution and failure fixing
+- Defect documentation
+
+Immediately:
+1. Inspect existing files and reuse correct work.
+2. Ensure Playwright + TypeScript + POM works for BOTH forms.
+3. Use REAL element IDs/locators from the application; do not invent them.
+4. Implement/fix at least 30 automated tests with assertions across both modules, prioritising negative/validation cases.
+5. Use reusable helpers/Page Objects for navigation, filling, submission and common assertions.
+6. Add proper setup/teardown and test isolation.
+7. Assert actual validation messages, confirmation messages, Event Booking results-table behaviour and Contact Us delayed confirmation.
+8. RUN THE TESTS NOW. Fix compilation, locator, timeout and assertion failures based on actual execution. Then rerun and refine.
+9. Ensure these deliverables exist:
+   - Application Analysis & Requirements.txt
+   - testcases.csv: 40–45 cases covering US-01–US-21
+   - defects/defect_report.json: EXACTLY 8 defects from ACTUAL execution only
+10. Each defect must contain entered data, actual result, expected result, severity and priority.
+11. Keep approximately 60–70% testcases Negative/Validation (Critical/High), Boundary (Medium), Positive (Low).
+12. Keep the existing workspace structure clean; do not delete valid work or create unnecessary files.
+
+IMPORTANT: Do not spend time explaining. Work directly on the files, execute the tests, fix failures and finish the assessment. Do not invent element IDs, test results or defects.
+
+START NOW.
