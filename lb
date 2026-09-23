@@ -1,0 +1,545 @@
+ROLE
+
+Act as a senior QA Automation Engineer, SDET, Test Architect, Requirements Analyst, and Debugging Specialist working directly inside the current VS Code workspace.
+
+You are completing an AI-assisted UI automation assessment for the Library Management Portal web application.
+
+Technology:
+- Playwright
+- TypeScript
+- Page Object Model
+- Reusable fixtures/helpers/utilities
+- Playwright assertions
+- Integrated VS Code terminal
+
+Objective:
+inspect → analyze → document → derive requirements → identify validations → create acceptance criteria → create test cases → implement automation → execute → debug/fix → re-run → identify genuine defects → document defects → final regression verification.
+
+Do not merely generate code. The final workspace must contain a complete, executable and maintainable solution satisfying the assessment requirements.
+
+TASK
+
+Application:
+https://webapps.tekstac.com/SeleniumApp2/Library/LibraryCard.html
+
+Modules:
+
+1. Library Card – US-01 to US-12
+2. Services – US-13 to US-22
+3. Membership – US-23 to US-28
+
+Module URLs:
+- Library Card:
+  https://webapps.tekstac.com/SeleniumApp2/Library/LibraryCard.html
+
+- Services:
+  https://webapps.tekstac.com/SeleniumApp2/Library/Services.html
+
+- Membership:
+  https://webapps.tekstac.com/SeleniumApp2/Library/MemberShip.html
+
+Use the provided User Stories.txt, assessment specification, application itself, and existing workspace as the source of truth.
+
+IMPORTANT:
+Do not invent selectors, element IDs, validation behaviour, expected results, or defects.
+Inspect the actual application and existing workspace before implementation.
+
+1. INSPECT THE EXISTING WORKSPACE AND APPLICATION
+
+First inspect the complete existing VS Code workspace.
+
+Determine:
+- existing folder/file structure
+- existing automation framework
+- language and test runner
+- existing dependencies
+- existing configuration
+- existing fixtures/helpers/utilities
+- existing page objects
+- existing tests
+- existing naming conventions
+- existing setup/teardown
+
+Do not unnecessarily redesign, rename, delete, or reorganize the provided workspace.
+
+Follow the Ground Rules:
+- Do not change the provided workspace structure.
+- Build the solution on top of the existing workspace.
+- Reuse existing valid framework components.
+- Keep the workspace clean.
+- Do not create redundant files or folders.
+- Follow standard naming conventions and framework-design practices.
+- Run all tests from the integrated VS Code terminal.
+- Do not create unnecessary temporary/debug files.
+
+2. ANALYZE ALL THREE MODULES
+
+Inspect the actual Library Card, Services, and Membership pages.
+
+Identify and document REAL:
+- HTML element IDs
+- names/classes where useful
+- reliable locators
+- input types
+- radio buttons
+- select/dropdown fields
+- buttons
+- hidden/visible fields
+- dynamic sections
+- validation behaviour
+- success messages/banners
+- form submission behaviour
+- page transitions
+- drag-and-drop behaviour
+- sessionStorage/localStorage behaviour where applicable
+
+Do not assume behaviour from the names of fields.
+Verify behaviour from the actual application.
+
+3. APPLICATION ANALYSIS & REQUIREMENTS
+
+Create/update:
+
+Application Analysis & Requirements.txt
+
+It must contain analysis for all three modules, including:
+
+- application/module details
+- URLs
+- element IDs/locators
+- field types
+- dynamic behaviour
+- validation rules
+- acceptance criteria
+- user story mapping
+- observed application behaviour
+- relevant positive and negative scenarios
+
+Cover:
+- US-01 to US-12 Library Card
+- US-13 to US-22 Services
+- US-23 to US-28 Membership
+
+4. LIBRARY CARD VALIDATION REQUIREMENTS
+
+Use the following documented validation rules as requirements and verify them against the actual application:
+
+Library Card:
+
+First Name & Last Name:
+- Non-empty text
+- No format validation
+- No trim validation
+
+Age:
+- Non-empty text
+- NOT numeric-format validated
+
+Email:
+- Non-empty
+- type=email provides browser-level validation only
+
+Phone:
+- Non-empty text
+- NOT digit-only validated
+- NOT length validated
+
+Role:
+- Student or Employee must be selected
+- Matching sub-field must be non-empty:
+  - Student → School
+  - Employee → Company
+
+Action:
+- Must select an option other than default "Select"
+
+Amount:
+- Read-only/disabled
+- Auto-populated based on action:
+  - Apply = 100
+  - Renewal = 50
+- No additional amount validation
+
+Mandatory fields:
+- 6 of 8 inputs are mandatory
+- Amount is not manually entered
+- Hidden/non-selected role sub-field is not mandatory
+
+5. SERVICES VALIDATION REQUIREMENTS
+
+Verify the following:
+
+Medium:
+- Email / Call / Chat must be selected first
+
+Call path:
+- Shows phone details only
+- No submit button
+- No validation
+
+Email path:
+- From must be non-empty
+- No email-format validation
+- Query must be non-empty
+
+Chat path:
+- Name must be non-empty
+- Your Phone must be non-empty
+- No digit-only validation
+- Query must be non-empty
+
+Successful submission:
+- Must display the appropriate green success banner:
+  "Mail Sent Successfully" or
+  "Message Sent Successfully"
+
+6. MEMBERSHIP VALIDATION REQUIREMENTS
+
+Verify the following:
+
+Human verification:
+- Drag the book image into the drop zone
+- Membership form is unreachable until verification succeeds
+
+Tier:
+- Gold or Platinum must be selected
+
+Card Number:
+- Non-empty
+- No format validation
+- No length validation
+- No checksum validation
+
+Amount:
+- Read-only
+- Gold → "Rs.5000"
+- Platinum → "Rs.25000"
+
+Successful submission:
+- Must display green "Membership Added" banner
+- Verify the actual application behaviour after submission
+- Verify sessionStorage behaviour where applicable
+
+7. ACCEPTANCE CRITERIA
+
+Create acceptance criteria for all user stories:
+
+- US-01 to US-12
+- US-13 to US-22
+- US-23 to US-28
+
+Acceptance criteria must be derived from:
+- User Stories.txt
+- documented requirements
+- actual application behaviour
+- validation rules
+- dynamic UI behaviour
+
+Do not create generic acceptance criteria.
+Each criterion must be testable and observable.
+
+8. GENERATE TEST CASES
+
+Create:
+
+testcases.csv
+
+Generate 40–45 detailed test cases covering ALL 28 user stories across:
+
+- Library Card
+- Services
+- Membership
+
+The test distribution must follow the assessment requirement:
+
+- Approximately 60–70% must be negative/validation tests.
+- Remaining tests should cover positive/success scenarios.
+- Critical/high-priority negative validation scenarios must be prioritised.
+- Boundary and format-gap scenarios must be included.
+
+Include scenarios such as:
+- empty required fields
+- invalid/format-gap values
+- negative Age
+- alphabetic Phone
+- email without TLD
+- symbol-only Card Number
+- incorrect role/sub-field combinations
+- default Action
+- invalid/empty Services fields
+- Membership verification-gate bypass attempt
+- empty Card Number
+- tier selection
+- dynamic amount verification
+- successful submissions
+
+Boundary and format-gap tests should generally be Medium priority as specified by the assessment.
+
+Use the exact CSV columns required by the assessment specification.
+
+Ensure:
+- every US-01 to US-28 is covered
+- no duplicate test cases
+- each test case has a clear scenario
+- expected results are specific and observable
+- priorities are meaningful
+- negative/validation distribution is approximately 60–70%
+
+9. IMPLEMENT AUTOMATION
+
+Implement a complete Playwright + TypeScript automation solution within the EXISTING workspace.
+
+Use Page Object Model.
+
+Create/reuse:
+
+- Library Card Page Object
+- Services Page Object
+- Membership Page Object
+- reusable fixtures/helpers/utilities
+- reusable Membership drag-and-drop helper
+
+Do not create a new framework if one already exists.
+
+Use:
+- reliable real locators
+- reusable methods
+- meaningful assertions
+- test isolation
+- proper setup/beforeEach
+- teardown/afterEach where appropriate
+- clear test naming
+- standard TypeScript conventions
+- minimal code duplication
+
+10. AUTOMATED TEST COVERAGE
+
+Implement 30 automated test methods with assertions.
+
+Target distribution:
+- approximately 12 Library Card tests
+- approximately 10 Services tests
+- approximately 8 Membership tests
+
+Prioritise:
+- critical validations
+- high-risk validations
+- negative scenarios
+- dynamic behaviour
+- success behaviour
+
+Assertions must verify actual application behaviour.
+
+Do NOT use assertions that merely prove an element exists when the requirement is about:
+- validation
+- error handling
+- visibility
+- field value
+- dynamic value
+- success banner
+- form submission
+- navigation
+- persistence/sessionStorage
+- drag-and-drop verification
+
+11. MEMBERSHIP DRAG-AND-DROP
+
+Implement a reusable drag-and-drop helper for the Membership human-verification step.
+
+The helper must:
+- locate the actual book image
+- locate the actual drop zone
+- perform the required drag-and-drop action
+- verify that the Membership form becomes reachable after successful verification
+
+Do not bypass the verification using JavaScript or by directly manipulating application state.
+
+12. TEST EXECUTION
+
+Run all tests ONLY from the integrated VS Code terminal.
+
+First determine the correct existing command from the workspace configuration.
+
+Then:
+
+- install dependencies only if required
+- compile if applicable
+- run the automated tests
+- inspect actual failures
+- fix locator failures
+- fix interaction failures
+- fix timeout failures
+- fix assertion failures
+- fix TypeScript/compilation failures
+- re-run affected tests
+- run the complete suite again
+
+Never claim a test passed unless it was actually executed successfully.
+
+13. AI-ASSISTED REFINEMENT
+
+The implementation must demonstrate iterative AI-assisted development.
+
+Use the workflow:
+
+Inspect
+→ Analyze
+→ Document
+→ Generate
+→ Implement
+→ Execute
+→ Observe failures
+→ Debug
+→ Fix
+→ Re-run
+→ Refine
+→ Final regression
+
+When failures occur, use the actual terminal output and application behaviour to determine the fix.
+
+Do not hide failures.
+Do not fabricate successful results.
+
+14. DEFECT IDENTIFICATION
+
+Execute the tests against the actual application.
+
+Identify ONLY genuine validation defects observed during actual execution.
+
+The assessment requires EXACTLY 5 validation defects.
+
+Create:
+
+defects/defect_report.json
+
+Document exactly 5 genuine defects.
+
+Each defect must contain at minimum:
+
+- defect ID
+- module
+- related user story/test case where applicable
+- entered data
+- actual result
+- expected result
+- severity
+- priority
+
+Defects must come ONLY from actual test execution.
+
+Do NOT:
+- predict defects
+- invent defects
+- infer defects without execution
+- document expected behaviour as a defect
+- create five defects just to satisfy the count
+
+If a validation works correctly, do not report it as defective.
+
+15. DEFECT QUALITY
+
+For each defect:
+- entered data must be specific
+- actual result must describe what the application actually did
+- expected result must come from the documented requirement/user story
+- severity must reflect actual impact
+- priority must be justified by the scenario
+
+The five defects must be validation-related and genuinely reproducible from execution.
+
+16. FINAL VERIFICATION
+
+Before finishing, verify all of the following:
+
+WORKSPACE:
+- existing workspace structure preserved
+- no unnecessary folders/files
+- no redundant framework
+- standard naming conventions followed
+- clean maintainable implementation
+
+ANALYSIS:
+- all three modules analysed
+- real element IDs/locators documented
+- field types documented
+- validation rules documented
+- dynamic behaviours documented
+- acceptance criteria documented
+- US-01 to US-28 covered
+
+TEST CASES:
+- testcases.csv created
+- 40–45 test cases
+- all 28 user stories covered
+- approximately 60–70% negative/validation
+- positive scenarios included
+- boundary/format-gap scenarios included
+- priorities included
+
+AUTOMATION:
+- Library Card automated
+- Services automated
+- Membership automated
+- Page Object Model used
+- reusable helpers used
+- drag-and-drop helper implemented
+- setup/teardown implemented appropriately
+- meaningful assertions implemented
+- 30 automated test methods implemented
+
+EXECUTION:
+- tests run from integrated VS Code terminal
+- actual failures investigated
+- failures fixed where appropriate
+- tests re-run
+- final regression suite executed
+- no false pass claims
+
+DEFECTS:
+- defects/defect_report.json created
+- EXACTLY 5 genuine validation defects
+- defects based only on actual execution
+- each defect contains entered data
+- actual result
+- expected result
+- severity
+- priority
+
+Do not stop after creating files.
+
+The required workflow is:
+
+INSPECT
+→ ANALYZE
+→ DOCUMENT
+→ DEFINE ACCEPTANCE CRITERIA
+→ GENERATE TEST CASES
+→ IMPLEMENT
+→ EXECUTE
+→ DEBUG
+→ FIX
+→ RE-RUN
+→ REFINE
+→ IDENTIFY REAL DEFECTS
+→ DOCUMENT DEFECTS
+→ FINAL REGRESSION
+→ VERIFY ALL DELIVERABLES
+
+IMPORTANT GROUND RULES:
+
+- Do not change the provided workspace structure.
+- Do not unnecessarily delete or modify existing files.
+- Do not create redundant files or folders.
+- Do not invent element IDs, selectors, behaviour, test results, or defects.
+- Reuse existing framework components whenever possible.
+- Run tests from the integrated VS Code terminal.
+- Keep the workspace clean.
+- Follow standard naming conventions and framework-design practices.
+- Use the actual application and User Stories.txt as the source of truth.
+- Implement only what is required by the assessment.
+- Do not claim execution results without actually running the tests.
+- Do not stop at code generation; execute and refine the solution.
+
+START NOW.
+First inspect the existing workspace and application.
+Do not begin implementation until the inspection and analysis are complete.
