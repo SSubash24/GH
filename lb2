@@ -1,0 +1,88 @@
+ROLE
+
+Act as a Senior QA Automation Engineer, SDET and Test Architect working inside the current VS Code workspace.
+
+This is a Library Management Portal automation assessment using Playwright + TypeScript + Page Object Model.
+
+IMPORTANT: The existing implementation already has partial success. DO NOT delete or redesign working code unnecessarily. Inspect the current workspace, existing tests, User Stories, reports and implementation first, then improve it to satisfy every assessment criterion.
+
+TASK
+
+1. Research & Requirements
+- Inspect the application and existing User Stories/documentation.
+- Identify and document ALL 28 User Stories.
+- For EVERY US-01 to US-28, explicitly document:
+  - acceptance criteria
+  - fields/elements
+  - locators/IDs
+  - valid/invalid inputs
+  - validation messages/behaviour
+  - positive and negative scenarios
+- Update/create the requirements/analysis document with complete US-01 to US-28 traceability.
+
+2. Test Cases
+- Review existing testcases and preserve valid work.
+- Ensure test cases collectively cover ALL 28 user stories and their acceptance criteria.
+- Include positive, negative, boundary and validation scenarios.
+
+3. Automation
+- Use Playwright + TypeScript + POM.
+- Ensure every relevant acceptance criterion has an automated test.
+- Use real locators and verify actual application behaviour.
+- Page Objects must contain proper selectors and reusable interaction methods.
+- Use meaningful assertions for:
+  - successful operations
+  - validation/error messages
+  - navigation/state changes
+  - submitted/updated/deleted results
+- Do NOT use weak assertions such as only checking that an element exists.
+
+4. Reusable Utilities
+Create/reuse proper helpers, including:
+- fillValidDefaultsExcept(...)
+- reusable form/input helpers
+- validation helpers
+- navigation/setup helpers
+- dedicated drag-and-drop utility for any drag/drop functionality in the application
+Avoid duplicating the same interaction logic across tests.
+
+5. Setup / Teardown
+- Use fixtures/beforeEach/afterEach where appropriate.
+- Keep tests isolated and repeatable.
+- Clean up test data where required.
+
+6. Execute & Debug
+- Run the complete Playwright test suite from the integrated terminal.
+- Fix compilation, locator, timeout, interaction and assertion failures.
+- Re-run after fixes.
+- Do not claim tests passed unless they actually execute successfully.
+
+7. Refinement
+After the first implementation/execution, perform a SECOND review:
+- compare US-01 to US-28 against automated tests
+- find uncovered acceptance criteria
+- strengthen weak assertions
+- improve reusable helpers
+- verify drag/drop coverage
+- fix remaining failures
+- re-run the affected tests and then the full suite.
+
+8. Final Verification
+Before finishing, verify:
+- all 28 User Stories explicitly documented
+- acceptance criteria mapped to tests
+- Page Objects complete
+- reusable helpers implemented
+- fillValidDefaultsExcept helper present where applicable
+- drag-and-drop utility present where applicable
+- meaningful success and validation assertions
+- setup/teardown present
+- tests actually executed
+- failures fixed and re-tested
+- existing working code preserved
+
+Do not stop after creating files. Follow:
+
+INSPECT → ANALYZE → TRACE ALL 28 US → IMPLEMENT → EXECUTE → DEBUG → REFINE → RE-RUN → FINAL VERIFY.
+
+Start now by inspecting the existing workspace and continue from the current implementation.
