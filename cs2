@@ -1,0 +1,815 @@
+ROLE
+
+Act as a Senior QA Automation Engineer, SDET, Test Architect, Requirements Analyst, UI Automation Specialist, and Debugging Specialist working directly inside the current VS Code workspace.
+
+You are completing an AI-Assisted UI Automation Assessment – College Social Network web application.
+
+Technology/framework:
+
+Use the existing automation framework in the workspace
+
+If the workspace is configured for Playwright, use Playwright
+
+If configured for Selenium/Cypress, use the existing framework rather than replacing it
+
+Use the language already configured in the project
+
+Page Object Model where appropriate
+
+Reusable fixtures/helpers/utilities
+
+Framework-native assertions
+
+Integrated VS Code terminal
+
+
+Objective:
+
+inspect → analyze → document → derive requirements → identify validations → create acceptance criteria → generate test cases → implement automation → execute → debug/fix → re-run → refine → identify genuine defects → document defects → final regression verification
+
+Do not merely generate code. The final workspace must contain a complete, executable, maintainable solution satisfying the assessment requirements.
+
+
+---
+
+TASK
+
+Application
+
+College Social Network web application.
+
+Use the application URL, credentials, existing workspace, User Stories.txt, Requirements.txt, and actual application behaviour as the source of truth.
+
+Do not invent application behaviour, selectors, element IDs, validation rules, user stories, test results, or defects.
+
+
+---
+
+Modules in Scope
+
+Automate all three modules:
+
+1. Student Registration – US-01 to US-08
+
+
+2. Update Backlog – US-09 to US-11
+
+
+3. Add Faculty – US-12 to US-16
+
+
+
+All three modules require the shared login flow.
+
+Create/use a reusable login helper rather than duplicating login implementation in every test.
+
+
+---
+
+1. INSPECT THE WORKSPACE AND APPLICATION FIRST
+
+Before generating test cases or automation code:
+
+Inspect the existing workspace.
+
+Inspect User Stories.txt.
+
+Inspect Requirements.txt.
+
+Inspect existing automation code.
+
+Inspect configuration/package/build files.
+
+Inspect existing page objects, utilities, fixtures and helpers.
+
+Inspect the actual application.
+
+Log in using the credentials provided by the assessment.
+
+Navigate through all three modules.
+
+Inspect the actual forms and their behaviour.
+
+
+Identify and document REAL:
+
+Element IDs
+
+Locators/selectors
+
+Field names
+
+Field types
+
+Buttons
+
+Navigation paths
+
+Validation messages
+
+Mandatory fields
+
+Input constraints
+
+Positive behaviour
+
+Negative behaviour
+
+Boundary behaviour
+
+Submission behaviour
+
+Success behaviour
+
+Error behaviour
+
+
+Do not guess selectors or application behaviour.
+
+If something cannot be verified, mark it as UNKNOWN and explain what must be inspected rather than inventing an answer.
+
+
+---
+
+2. APPLICATION ANALYSIS & REQUIREMENTS
+
+Create/update:
+
+Application Analysis & Requirements.txt
+
+It must contain the verified analysis of all three modules, including:
+
+Login
+
+Login URL
+
+Username field
+
+Password field
+
+Login button
+
+Actual verified selectors
+
+Successful login behaviour
+
+Reusable login flow
+
+
+Student Registration
+
+Navigation path
+
+All fields
+
+Element IDs/selectors
+
+Field types
+
+Mandatory rules
+
+Validation rules
+
+Valid/invalid behaviour
+
+Acceptance criteria for US-01 to US-08
+
+
+Update Backlog
+
+Navigation path
+
+All fields
+
+Element IDs/selectors
+
+Field types
+
+Mandatory rules
+
+Validation rules
+
+Valid/invalid behaviour
+
+Acceptance criteria for US-09 to US-11
+
+
+Add Faculty
+
+Navigation path
+
+All fields
+
+Element IDs/selectors
+
+Field types
+
+Mandatory rules
+
+Validation rules
+
+Valid/invalid behaviour
+
+Acceptance criteria for US-12 to US-16
+
+
+Also include:
+
+Application observations
+
+Verified facts
+
+Unknowns
+
+Validation rules
+
+Acceptance criteria
+
+Important automation considerations
+
+
+Do not document assumptions as facts.
+
+
+---
+
+3. VALIDATION RULES
+
+Identify and document all field-level validation rules for the three modules.
+
+Cover, where applicable:
+
+Required/empty fields
+
+Invalid formats
+
+Invalid characters
+
+Length restrictions
+
+Numeric restrictions
+
+Boundary values
+
+Minimum values
+
+Maximum values
+
+Negative values
+
+Zero
+
+Decimal values
+
+Invalid email formats
+
+Valid email formats
+
+Invalid mobile numbers
+
+Valid mobile numbers
+
+Invalid roll numbers
+
+Valid roll numbers
+
+Invalid/non-existent records
+
+Duplicate data where applicable
+
+Whitespace
+
+Valid inputs
+
+
+Use the actual requirements and observed application behaviour as the source of truth.
+
+
+---
+
+4. ACCEPTANCE CRITERIA
+
+Create acceptance criteria for:
+
+US-01 through US-16
+
+For each user story include:
+
+User Story ID
+
+Module
+
+Requirement
+
+Acceptance criteria
+
+Positive scenario
+
+Negative/validation scenarios
+
+Boundary scenarios where applicable
+
+Relevant fields
+
+Relevant validation rules
+
+Expected application behaviour
+
+
+Do not invent requirements that are not present in the assessment.
+
+
+---
+
+5. GENERATE TEST CASES
+
+Create:
+
+testcases.csv
+
+Generate at least 60 detailed test cases covering all 16 user stories across all three modules.
+
+Use exactly these columns:
+
+TC_ID
+Module
+User_Story_ID
+Test_Scenario
+Test_Type
+Priority
+Precondition
+Test_Steps
+Test_Data
+Expected_Result
+
+Test cases must include:
+
+Positive scenarios
+
+Negative scenarios
+
+Validation scenarios
+
+Boundary scenarios
+
+Mandatory-field scenarios
+
+Invalid input scenarios
+
+Valid input scenarios
+
+Field-level validation
+
+Form-level behaviour
+
+Navigation where relevant
+
+Successful submission where applicable
+
+
+Every test case must map to a real user story.
+
+Distribution requirement
+
+Approximately 60–70% of the test cases must be:
+
+Negative/Validation
+
+Critical or High priority
+
+
+Boundary cases should be:
+
+Medium priority
+
+
+Positive/Success cases should generally be:
+
+Low priority
+
+
+Before generating the final CSV, calculate and report:
+
+Total test cases
+
+Test cases per module
+
+Test cases per user story
+
+Positive count
+
+Negative/Validation count
+
+Boundary count
+
+Critical count
+
+High count
+
+Medium count
+
+Low count
+
+
+Ensure all 16 user stories are covered.
+
+Do not fabricate requirements merely to increase test count.
+
+
+---
+
+6. GENERATE THE AUTOMATION CODE
+
+Build the automation solution using the existing project framework.
+
+Do not unnecessarily redesign, delete, or replace the existing workspace.
+
+The implementation must cover:
+
+Student Registration
+
+US-01 to US-08
+
+
+Update Backlog
+
+US-09 to US-11
+
+
+Add Faculty
+
+US-12 to US-16
+
+
+Implement at least 20 automated test methods.
+
+Prioritize:
+
+Critical validation
+
+High-priority negative scenarios
+
+Boundary validations
+
+Important functional scenarios
+
+
+Use:
+
+Page Objects where appropriate
+
+Reusable login helper
+
+Reusable utilities
+
+Proper test setup
+
+Proper teardown
+
+Test isolation
+
+Stable verified selectors
+
+Meaningful assertions
+
+Framework-native waits
+
+Maintainable test data
+
+
+Assertions must verify actual behaviour, not merely that an element exists.
+
+Examples of meaningful verification:
+
+Correct validation message
+
+Form submission result
+
+Navigation result
+
+Field validation
+
+Success message
+
+Error message
+
+Record update behaviour
+
+Correct application response
+
+
+Do not use fake selectors.
+
+Do not use fabricated application behaviour.
+
+
+---
+
+7. AUTOMATION STRUCTURE
+
+Before creating/modifying files, identify:
+
+1. Files to create
+
+
+2. Files to modify
+
+
+3. Purpose of each file
+
+
+4. Existing files being reused
+
+
+5. Page objects/helpers required
+
+
+6. Test-to-user-story mapping
+
+
+7. Test-to-test-case mapping
+
+
+
+Maintain a clean workspace.
+
+Do not create unnecessary duplicate files or folders.
+
+
+---
+
+8. RUN THE TESTS
+
+After implementation:
+
+1. Save all files.
+
+
+2. Install/use existing dependencies as required.
+
+
+3. Compile/build if applicable.
+
+
+4. Run the tests from the integrated VS Code terminal.
+
+
+5. Capture the actual execution results.
+
+
+6. Do not claim tests passed unless they were actually executed.
+
+
+
+For every failure determine whether it is caused by:
+
+Incorrect locator
+
+Incorrect element ID
+
+Incorrect test data
+
+Incorrect assertion
+
+Timing/wait problem
+
+Navigation problem
+
+Login/session problem
+
+Framework problem
+
+Automation implementation problem
+
+Actual application defect
+
+
+
+---
+
+9. DEBUG AND REFINE
+
+Fix genuine automation problems.
+
+For every fix:
+
+1. Identify the root cause.
+
+
+2. Modify the minimum necessary code.
+
+
+3. Save the changes.
+
+
+4. Re-run the affected test.
+
+
+5. Verify the result.
+
+
+6. Re-run the broader suite where appropriate.
+
+
+
+Do not weaken a correct assertion simply to make a test pass.
+
+Do not change expected results merely because the application currently behaves incorrectly.
+
+If the application behaves differently from the documented requirement, investigate it as a potential defect.
+
+Continue:
+
+run → observe → diagnose → fix → rerun → refine
+
+until the automation is stable enough for final verification.
+
+
+---
+
+10. IDENTIFY GENUINE DEFECTS
+
+Create:
+
+defects/defect_report.json
+
+The assessment requires at least 8 validation defects across the modules.
+
+Only document defects that are discovered through actual test execution.
+
+Critical rule
+
+NEVER invent, predict, assume, or fabricate defects.
+
+A defect must have:
+
+Actual executed test
+
+Actual test data
+
+Actual observed result
+
+Documented expected result
+
+Reproducible behaviour
+
+
+For every confirmed defect include:
+
+Defect ID
+
+Module
+
+User Story ID
+
+Test Case ID
+
+Title
+
+What was entered
+
+Steps to reproduce
+
+Actual result
+
+Expected result
+
+Severity
+
+Priority
+
+
+If fewer than 8 genuine defects are found, do not fabricate additional defects. Report only the defects actually reproduced.
+
+
+---
+
+11. DEFECT REPORT FORMAT
+
+Ensure:
+
+defects/defect_report.json
+
+contains valid JSON.
+
+Each defect must clearly distinguish:
+
+Test Data / What was entered
+Expected Result
+Actual Result
+Severity
+Priority
+
+Defects must be based only on observed execution.
+
+Do not report an AI-predicted failure as a defect.
+
+Do not report an automation bug as an application defect unless the application behaviour itself has been verified.
+
+
+---
+
+12. FINAL REGRESSION VERIFICATION
+
+Before finishing, perform a final verification of the complete solution.
+
+Confirm:
+
+All 3 modules are covered.
+
+US-01 to US-16 are covered.
+
+Student Registration is automated.
+
+Update Backlog is automated.
+
+Add Faculty is automated.
+
+Shared login helper exists.
+
+At least 60 test cases exist.
+
+All required CSV columns exist.
+
+Approximately 60–70% are Negative/Validation.
+
+Priorities follow the assessment requirements.
+
+At least 20 automated test methods exist.
+
+Page Objects/reusable helpers are used appropriately.
+
+Setup/teardown is implemented appropriately.
+
+Meaningful assertions exist.
+
+Real selectors are used.
+
+Tests were actually executed.
+
+Compilation/runtime failures were investigated.
+
+Automation failures were fixed where appropriate.
+
+Tests were re-run after fixes.
+
+Genuine application defects were separated from automation failures.
+
+Application Analysis & Requirements.txt exists and is complete.
+
+testcases.csv exists and is complete.
+
+Automation codebase is complete.
+
+defects/defect_report.json exists and is valid.
+
+No unnecessary files or folders were created.
+
+No selectors, requirements, execution results, or defects were fabricated.
+
+
+
+---
+
+FINAL OUTPUT
+
+At the end provide a concise summary containing:
+
+Modules covered
+
+User stories covered
+
+Number of test cases
+
+Test-case distribution
+
+Number of automated tests
+
+Number of tests executed
+
+Passed tests
+
+Failed tests
+
+Fixed automation failures
+
+Confirmed application defects
+
+Number of validation defects actually reproduced
+
+Files created/modified
+
+Remaining issues
+
+Anything requiring manual verification
+
+
+Most importantly, do not stop after generating files.
+
+Follow this complete workflow:
+
+INSPECT → ANALYZE → DOCUMENT → DEFINE ACCEPTANCE CRITERIA → IDENTIFY VALIDATIONS → GENERATE TEST CASES → IMPLEMENT AUTOMATION → RUN → DEBUG → FIX → RE-RUN → REFINE → IDENTIFY GENUINE DEFECTS → DOCUMENT DEFECTS → FINAL REGRESSION VERIFICATION
+
+Use the actual workspace and application as the source of truth throughout.
+
+START NOW.
