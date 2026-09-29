@@ -1,0 +1,400 @@
+ROLE
+
+Act as a senior QA Automation Engineer, SDET, Test Architect, Requirements Analyst, and Debugging Specialist working directly inside the current VS Code workspace.
+
+You are completing the AI-assisted UI automation assessment for the Star Event Service – Event Management web application.
+
+Technology:
+- Playwright
+- TypeScript
+- Page Object Model
+- Reusable fixtures/helpers/utilities
+- Playwright assertions
+- Integrated VS Code terminal
+
+IMPORTANT:
+The assessment evaluates both:
+1. What I analyse and discover
+2. How I direct the AI through research, generation, coding, and refinement
+
+Therefore, do not simply generate a generic automation framework. Base all requirements, selectors, validations, assertions, test cases, and defects on the actual application, the provided User Stories.txt, the existing workspace, and actual test execution.
+
+OBJECTIVE
+
+Follow this workflow:
+
+INSPECT → ANALYSE → DOCUMENT → DEFINE ACCEPTANCE CRITERIA → IDENTIFY VALIDATION RULES → GENERATE TEST CASES → IMPLEMENT AUTOMATION → EXECUTE → DEBUG → RE-RUN → REFINE → IDENTIFY REAL DEFECTS → DOCUMENT DEFECTS → FINAL REGRESSION VERIFICATION
+
+APPLICATION
+
+URL:
+https://webapps.tekstac.com/SeleniumApp1/EventManagement/index.html
+
+Modules in scope:
+
+1. Event Booking
+   - Event Booking form
+   - User Stories US-01 to US-15
+
+2. Contact Us
+   - Contact Us form
+   - User Stories US-16 to US-21
+
+SOURCE OF TRUTH
+
+Use:
+- User Stories.txt
+- Existing VS Code workspace/project files
+- Actual application DOM and behaviour
+- Assessment requirements
+
+Do NOT invent:
+- element IDs
+- selectors
+- user stories
+- validation rules
+- application behaviour
+- expected results
+- defects
+- execution results
+
+If something is unclear, inspect the actual application/workspace before making a decision.
+
+STEP 1 — INSPECT THE APPLICATION AND WORKSPACE
+
+First inspect the existing workspace.
+
+Then open the Event Management application directly using the provided URL.
+
+Inspect BOTH:
+- Event Booking form
+- Contact Us form
+
+Identify and document:
+- actual HTML element IDs
+- names
+- field types
+- buttons
+- dropdowns
+- radio buttons
+- labels
+- relevant attributes
+- visible messages
+- confirmation messages
+- delayed messages
+- table/result behaviour
+- navigation/interaction behaviour
+- actual validation behaviour
+
+Submit empty forms and invalid values where appropriate to observe how the application actually responds.
+
+Do not assume that a field has validation merely because its name suggests it should.
+
+STEP 2 — USER STORIES AND ACCEPTANCE CRITERIA
+
+Read User Stories.txt completely.
+
+Cover ALL:
+- US-01 through US-15 for Event Booking
+- US-16 through US-21 for Contact Us
+
+Create clear acceptance criteria for every user story.
+
+Acceptance criteria must be derived from the actual user stories and application behaviour.
+
+Do not omit any user story.
+
+STEP 3 — VALIDATION RULES
+
+Identify and document ALL field-level validation rules for BOTH modules.
+
+Event Booking includes the fields shown in the assessment, including:
+- First Name
+- Last Name
+- Phone Number
+- Email ID
+- Event Type
+- Event Date
+- Event Time
+- Guest Count
+- Catering
+- Address
+- City
+- Pincode
+- Event Details
+
+Verify which fields are mandatory and which are optional.
+
+Important:
+The assessment states that 12 of 13 Event Booking fields are mandatory, with Event Details being the exception.
+
+For Contact Us inspect:
+- Name
+- Email
+- Subject
+- Message
+
+Pay special attention to the ACTUAL email validation behaviour. Do not assume normal browser email validation occurs; verify it in the application.
+
+Create/update:
+
+Application Analysis & Requirements.txt
+
+It must contain:
+1. Application/module analysis
+2. Real element IDs/selectors
+3. Field types
+4. Actual application behaviour
+5. Validation rules
+6. Acceptance criteria for US-01 through US-21
+
+STEP 4 — GENERATE TEST CASES
+
+Create:
+
+testcases.csv
+
+Generate EXACTLY 40–45 detailed test cases covering BOTH modules and ALL 21 user stories.
+
+Use these exact CSV columns:
+
+TC_ID
+Module
+User_Story_ID
+Test_Scenario
+Test_Type
+Priority
+Precondition
+Test_Steps
+Test_Data
+Expected_Result
+
+Test distribution:
+
+Approximately 60–70% of the total test cases must be:
+- Negative
+- Validation-focused
+
+Negative/Validation tests should generally have:
+- Critical or High priority
+
+Boundary tests should have:
+- Medium priority
+
+Positive/Success tests should have:
+- Low priority
+
+Cover:
+- required field validation
+- invalid input
+- missing input
+- dropdown default selections
+- radio-button requirements
+- boundary scenarios
+- positive/success scenarios
+- application-specific behaviours
+- confirmation messages
+- delayed messages where applicable
+- result-table behaviour where applicable
+
+Ensure ALL US-01 through US-21 are represented.
+
+Include the relevant User Story ID/link/reference for every test case.
+
+Do not create meaningless duplicate test cases simply to reach 40–45.
+
+STEP 5 — IMPLEMENT AUTOMATION
+
+Build a complete Playwright + TypeScript automation solution.
+
+Use:
+
+- Page Object Model
+- Separate page objects for Event Booking and Contact Us
+- Reusable helper utilities
+- Fixtures where useful
+- Proper test setup
+- Proper teardown
+- Reliable real selectors
+- Test isolation
+- Playwright assertions
+
+Implement AT LEAST 30 automated test methods across BOTH modules.
+
+Prioritise:
+- Critical validations
+- High-risk validations
+- Negative scenarios
+- Boundary scenarios
+
+Do not prioritise only happy-path tests.
+
+Every automated test must contain meaningful assertions that verify actual application behaviour.
+
+Do not use assertions that merely verify that an element exists unless existence itself is the requirement.
+
+Navigate directly to:
+
+https://webapps.tekstac.com/SeleniumApp1/EventManagement/index.html
+
+before interacting with either form.
+
+Reference the real element IDs/selectors and validation rules discovered during inspection.
+
+No login helper is required.
+
+STEP 6 — EXECUTE AND REFINE
+
+Run the generated Playwright tests from the integrated VS Code terminal.
+
+Do NOT stop after generating code.
+
+Actually execute the tests.
+
+Fix:
+- TypeScript compilation errors
+- Playwright errors
+- incorrect selectors
+- timing issues
+- interaction failures
+- timeout failures
+- incorrect assertions
+- test isolation problems
+- incorrect assumptions about application behaviour
+
+After fixes, re-run the affected tests.
+
+Then run the broader test suite again.
+
+Only consider an application behaviour to be a defect after it has been observed during actual execution.
+
+STEP 7 — EVALUATE WORK STRATEGICALLY
+
+The assessment provides ONLY THREE "Evaluate" attempts for the entire assessment.
+
+Use them strategically:
+
+1. Approximately 50% completion:
+   - use Evaluate
+   - inspect the feedback
+   - correct problems identified by the evaluator
+
+2. Approximately 90% completion:
+   - use Evaluate again
+   - refine the solution based on feedback
+
+3. After the solution is complete:
+   - perform the final Evaluate
+
+Do NOT waste Evaluate attempts unnecessarily.
+
+Also save the workspace frequently using Ctrl+S.
+
+STEP 8 — DEFECT IDENTIFICATION
+
+Create:
+
+defects/defect_report.json
+
+Document EXACTLY 8 genuine VALIDATION DEFECTS.
+
+This is critical:
+
+DEFECTS MUST COME FROM ACTUAL TEST EXECUTION.
+
+Do NOT invent defects.
+Do NOT predict defects.
+Do NOT create theoretical defects.
+Do NOT fabricate execution results.
+
+For every defect include at minimum:
+
+- entered data
+- actual result
+- expected result
+- severity
+- priority
+
+Only document defects that were genuinely observed during execution.
+
+Ensure all 8 defects are validation-related and based on real test runs.
+
+STEP 9 — FINAL VERIFICATION
+
+Before finishing, verify ALL of the following:
+
+APPLICATION ANALYSIS:
+- Both Event Booking and Contact Us analysed
+- Real element IDs/selectors documented
+- Real field types documented
+- Actual behaviours documented
+- Validation rules documented
+- US-01 through US-21 acceptance criteria documented
+
+TEST CASES:
+- testcases.csv exists
+- 40–45 total test cases
+- Both modules covered
+- All US-01 through US-21 covered
+- Exact required CSV columns used
+- Approximately 60–70% negative/validation
+- Critical/High priority used appropriately for negative/validation
+- Medium priority for boundary cases
+- Low priority for positive/success cases
+
+AUTOMATION:
+- Playwright + TypeScript
+- Page Object Model
+- Both modules automated
+- At least 30 automated test methods
+- Reusable helpers/utilities
+- Setup/fixtures/teardown
+- Reliable real selectors
+- Meaningful assertions
+- Tests actually executed
+
+EXECUTION:
+- Tests compiled successfully
+- Tests were actually run
+- Failures were investigated
+- Code was fixed based on actual failures
+- Tests were re-run
+- Final implementation is executable
+
+DEFECTS:
+- defects/defect_report.json exists
+- EXACTLY 8 validation defects
+- All 8 are based on actual execution
+- No AI-predicted/fabricated defects
+- Each defect contains entered data, actual result, expected result, severity and priority
+
+FINAL FILES REQUIRED:
+
+1. Application Analysis & Requirements.txt
+2. testcases.csv
+3. Complete automation codebase
+4. defects/defect_report.json
+
+IMPORTANT FINAL RULE:
+
+Do not stop after creating files.
+
+The required workflow is:
+
+INSPECT
+→ ANALYSE
+→ DOCUMENT
+→ ACCEPTANCE CRITERIA
+→ VALIDATION RULES
+→ TEST CASES
+→ AUTOMATION
+→ EXECUTE
+→ DEBUG
+→ RE-RUN
+→ REFINE
+→ REAL DEFECTS
+→ FINAL VERIFICATION
+
+Use the existing workspace and preserve valid existing work wherever possible.
+
+START NOW.
