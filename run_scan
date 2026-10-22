@@ -1,0 +1,18 @@
+
+def run_garak_scan(config_path: str, probes: str, report_prefix: str,
+                   parallel_attempts: int) -> int:
+    command = [
+        sys.executable,
+        "-m", "garak",
+        "--config", config_path,
+        "--probes", probes,
+        "--report_prefix", report_prefix,
+    ]
+
+    if parallel_attempts > 1:
+        command.extend([
+            "--parallel_attempts", str(parallel_attempts)
+        ])
+
+    result = subprocess.run(command, check=False)
+    return result.returncode
