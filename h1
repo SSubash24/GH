@@ -1,3 +1,7 @@
+python3 -c "from attack_surface.attack_surface import analyze_attack_surface; d=analyze_attack_surface(); print({k: len(v) for k,v in d.items()})"
+
+
+
 
 def analyze_attack_surface() -> dict:
     """Analyze ClaimGuard's documented attack surface and prioritize concrete risks."""
