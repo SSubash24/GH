@@ -1,0 +1,452 @@
+ROLE
+
+Act as a senior QA Automation Engineer, SDET, test architect, requirements analyst, Playwright specialist, and debugging expert working directly inside my CURRENT VS Code workspace.
+
+You are completing an AI-Assisted UI Automation Assessment for the Pandemic District & State E-Pass application.
+
+Your technology stack must be:
+
+- Playwright
+- TypeScript
+- Page Object Model (POM)
+- Reusable fixtures, helpers, and utilities
+- Playwright assertions
+- Integrated VS Code terminal for test execution
+
+Your objective is to complete the assessment end to end:
+
+Inspect → Analyse → Document → Define Acceptance Criteria → Identify Validation Rules → Generate Test Cases → Implement Automation → Execute Tests → Debug Failures → Refine Tests → Document Genuine Defects → Final Verification.
+
+Do not merely explain what needs to be done. Work directly with the existing workspace and save the required files.
+
+IMPORTANT WORKSPACE RULES
+
+1. Inspect the existing workspace before making changes.
+2. Continue from the CURRENT implementation. Do not start over unnecessarily.
+3. Read "User Stories.txt", the assessment requirements, existing source files, and any existing automation code.
+4. Preserve the existing workspace structure. Do not delete, rename, or restructure valid files.
+5. Reuse working code and fix incomplete or incorrect implementations.
+6. Do not create unnecessary files or folders.
+7. Use the integrated VS Code terminal to execute the automation.
+8. Prioritize completing missing evaluation criteria and running the tests over lengthy explanations.
+9. Save files frequently.
+10. If time is limited, complete the highest-value assessment requirements first and continue until the available time is exhausted.
+
+APPLICATION UNDER TEST
+
+System Name: Pandemic District & State E-Pass
+
+Module 1 — District E-Pass
+
+URL:
+https://webapps.tekstac.com/SeleniumApp2/Pandemic/DistrictPass.html
+
+User Stories: District US-01 to US-09.
+
+Module 2 — State E-Pass
+
+URL:
+https://webapps.tekstac.com/SeleniumApp2/Pandemic/StatePass.html
+
+User Stories: State US-01 to US-12.
+
+Important: District and State have separate user-story numbering. Always identify the module when referencing a user story.
+
+Both forms are client-side applications using static HTML and "PandemicJS.js". Successful submission hides the form and displays a Submitted Details summary on the same page. There is no backend API call, no persistence after page reload, and no server-generated application/reference ID.
+
+Navigate directly to each form URL before interacting with it. No login helper is required.
+
+STEP 1 — INSPECT BOTH E-PASS MODULES
+
+Inspect the existing source code, including:
+
+- "DistrictPass.html"
+- "StatePass.html"
+- "PandemicJS.js"
+- "User Stories.txt"
+- Existing assessment requirements
+- Existing Playwright configuration, page objects, tests, and utilities
+
+If the files are already in the workspace, use them rather than creating duplicate copies.
+
+Inspect both forms in the browser and identify the actual HTML element IDs, field types, buttons, dropdown options, radio buttons, inline error labels, and result-summary elements.
+
+Submit empty forms and invalid values to observe the actual application behaviour.
+
+Read "PandemicJS.js" and inspect the implementations of:
+
+- "districtPassSubmit()"
+- "stateSubmit()"
+
+Use the actual source code and browser observations as the source of truth. Do not invent selectors, validation behaviour, error messages, or success messages.
+
+Document:
+
+- Form fields and their HTML IDs
+- Input types
+- Mandatory and optional fields
+- Dropdown defaults and available options
+- Radio-button behaviour
+- Inline error-label IDs
+- Submit-button behaviour
+- Empty-form behaviour
+- Invalid-input behaviour
+- Successful-submission behaviour
+- Submitted Details summary behaviour
+- Differences between documented requirements and actual application behaviour
+
+If inspection has already been completed in the current workspace, reuse the findings and focus on missing work.
+
+STEP 2 — DEFINE ACCEPTANCE CRITERIA
+
+Read "User Stories.txt" and the assessment requirements.
+
+Define acceptance criteria for every user story:
+
+- District E-Pass: US-01 through US-09
+- State E-Pass: US-01 through US-12
+
+Create or update:
+
+"Application Analysis & Requirements.txt"
+
+This file must contain:
+
+1. Application overview
+2. Both application URLs
+3. Module scope and user-story mapping
+4. Application navigation
+5. Analysis of the District E-Pass form
+6. Analysis of the State E-Pass form
+7. Actual HTML element IDs and field types
+8. Acceptance criteria for every user story
+9. Field-level validation rules
+10. Actual inline error behaviour
+11. Successful submission behaviour
+12. Observed application limitations and discrepancies
+13. Relevant findings from "PandemicJS.js"
+
+Keep District and State findings clearly separated.
+
+STEP 3 — DOCUMENT VALIDATION RULES
+
+Inspect the actual application and "PandemicJS.js" to establish the rules below.
+
+A. District E-Pass
+
+Document and test these known requirements:
+
+- Name: mandatory, non-empty text; no letters-only restriction is enforced.
+- Email: mandatory, non-empty text; email format is not validated.
+- Mobile Number: three separate segments; each segment must be non-empty, with maximum lengths of 3, 3, and 4 characters respectively. Numeric-only enforcement is not applied.
+- District: a selection other than the default "------Select------" is required.
+- Gender: one radio option among Male, Female, and Others must be selected.
+- Aadhaar Number: mandatory, non-empty text; length and digit format are not validated.
+- Reason: a selection other than the default "------Select------" is required.
+- All seven fields are mandatory.
+
+B. State E-Pass
+
+Document and test these known requirements:
+
+- Name: mandatory, non-empty text.
+- Email: mandatory, non-empty text; email format is not validated.
+- Mobile Number: three separate non-empty segments, with maximum lengths of 3, 3, and 4 characters. Numeric-only enforcement is not applied.
+- State: a selection other than the default "------Select------" is required.
+- Gender: one radio option among Male, Female, and Others must be selected.
+- Aadhaar Number: mandatory, non-empty text; length and digit format are not validated.
+- Reason: a selection other than the default "------Select------" is required.
+- Travel By: a selection other than the default "------Select------" is required.
+- Travel Date: mandatory, non-empty text; date format is not validated.
+- Anything to Say: optional textarea.
+- Nine of the ten fields are mandatory.
+
+Verify these rules against the actual source code and observed application behaviour. Record discrepancies rather than assuming the application enforces validation that is not implemented.
+
+STEP 4 — GENERATE TEST CASES
+
+Create or update:
+
+"testcases.csv"
+
+Generate 40–45 detailed test cases, targeting 42 cases where practical.
+
+Required CSV columns:
+
+"TC_ID,Module,User_Story_ID,Test_Scenario,Test_Type,Priority,Precondition,Test_Steps,Test_Data,Expected_Result,Actual_Result,Status"
+
+Coverage requirements:
+
+- District E-Pass: approximately 20 cases covering US-01 to US-09.
+- State E-Pass: approximately 20–25 cases covering US-01 to US-12.
+- Every one of the 21 module-specific user stories must be covered.
+- Include positive, negative, validation, boundary, mandatory-field, and functional scenarios.
+- Include empty-form submissions.
+- Include missing required fields individually.
+- Include invalid email values that reveal whether format validation is enforced.
+- Include alphabetic or alphanumeric mobile segments.
+- Include incomplete mobile segments.
+- Include non-numeric or incorrectly sized Aadhaar values.
+- Include default dropdown selections.
+- Include missing gender selection.
+- Include invalid or empty State travel dates.
+- Include State submissions with the optional textarea empty and populated.
+- Include successful submissions and Submitted Details verification.
+
+Test distribution
+
+- Approximately 60–70% Negative/Validation tests.
+- Negative/Validation tests: Critical or High priority.
+- Boundary tests: Medium priority.
+- Positive/Success tests: Low priority.
+
+Allowed priorities: Critical, High, Medium, Low.
+
+Use actual user stories, element IDs, and validation rules.
+
+Do not invent expected UI messages. Derive expected results from the requirements and actual application behaviour.
+
+Populate "Actual_Result" and "Status" after execution where practical. Clearly distinguish tests that have actually run from tests that have not run.
+
+STEP 5 — IMPLEMENT PLAYWRIGHT AUTOMATION
+
+Implement or repair the existing Playwright TypeScript framework.
+
+Do not replace a working framework unnecessarily.
+
+Required architecture
+
+Use the existing workspace structure and implement:
+
+1. Playwright configuration and browser setup
+2. District E-Pass Page Object
+3. State E-Pass Page Object
+4. Reusable helper methods/utilities
+5. Automated test specifications
+6. Test setup and teardown
+7. Meaningful assertions
+8. Test data handling
+9. Defect-logging utility where appropriate
+
+Use actual HTML IDs and reliable locators discovered from the application.
+
+Do not guess selectors.
+
+Page Objects
+
+District E-Pass Page Object
+
+Implement reusable methods for:
+
+- Navigating directly to DistrictPass.html
+- Identifying form fields
+- Filling individual fields
+- Filling all valid fields except a specified field
+- Selecting District
+- Selecting Gender
+- Entering the three Mobile Number segments
+- Submitting the form
+- Reading inline validation errors
+- Verifying successful submission
+- Reading the Submitted Details summary
+
+State E-Pass Page Object
+
+Implement reusable methods for:
+
+- Navigating directly to StatePass.html
+- Identifying form fields
+- Filling individual fields
+- Filling all valid fields except a specified field
+- Selecting State
+- Selecting Gender
+- Selecting Reason and Travel By
+- Entering the three Mobile Number segments
+- Entering Travel Date
+- Handling the optional Anything to Say textarea
+- Submitting the form
+- Reading inline validation errors
+- Verifying successful submission
+- Reading the Submitted Details summary
+
+Reusable utilities
+
+Implement appropriate shared utilities for:
+
+- Common form interactions
+- Reliable field filling
+- Dropdown and radio-button interactions
+- Validation assertions
+- Success-summary assertions
+- Test-data management
+- Defect logging
+
+Avoid duplicating the same interaction logic throughout the tests.
+
+Use "beforeEach" for navigation and test setup where appropriate.
+
+Use "afterEach" for appropriate cleanup, logging, or reporting.
+
+Tests must be isolated. Since the forms are client-side and do not persist submitted data after reload, use navigation or page reloads where appropriate to reset state.
+
+Automated test coverage
+
+Implement at least 30 automated test methods, with:
+
+- At least 15 District E-Pass tests.
+- At least 15 State E-Pass tests.
+
+Prioritize:
+
+1. Critical required-field validations.
+2. High-priority negative and validation scenarios.
+3. Boundary cases.
+4. Positive submission scenarios.
+5. Submitted Details verification.
+
+Every important test must contain meaningful assertions validating actual UI behaviour.
+
+Assertions should verify applicable outcomes such as:
+
+- The form remains visible when validation blocks submission.
+- The correct field-specific validation error appears.
+- Default dropdown selections are rejected where required.
+- Missing gender selection is rejected where required.
+- Valid submissions display the Submitted Details summary.
+- Submitted values are represented correctly in the summary.
+- The State optional textarea does not prevent submission when empty.
+- The application behaves according to its actual validation rules.
+
+Do not rely only on assertions that an element exists.
+
+Do not weaken assertions simply to make tests pass.
+
+STEP 6 — EXECUTE, DEBUG, AND REFINE
+
+This step is mandatory.
+
+Use the integrated VS Code terminal to execute the tests.
+
+First inspect the available scripts and installed dependencies. Use the existing Playwright configuration where possible.
+
+Run the relevant commands to install missing dependencies if necessary, compile TypeScript where applicable, and execute the Playwright suite.
+
+For each failure:
+
+1. Read the actual execution error.
+2. Determine whether it is caused by a locator, navigation, timing, assertion, test data, configuration, or application defect.
+3. Inspect the actual HTML or JavaScript when needed.
+4. Fix incorrect automation code.
+5. Correct assertions only when actual behaviour proves the original assertion was incorrect.
+6. Rerun failed tests.
+7. Rerun the complete suite where time permits.
+
+Check for:
+
+- TypeScript compilation errors
+- Incorrect element IDs
+- Strict-mode locator errors
+- Incorrect dropdown options
+- Incorrect radio-button locators
+- Timeout failures
+- Synchronization issues
+- Incorrect assumptions about validation
+- Incorrect success-summary assertions
+
+Do not stop after generating code.
+
+If the complete suite cannot finish within the available time, execute the highest-priority validation tests first and clearly report which tests actually ran.
+
+STEP 7 — DOCUMENT ACTUAL DEFECTS
+
+Create or update the consolidated file:
+
+"defects/defect_report.json"
+
+The assessment requires at least eight validation defects, with at least four District E-Pass defects and four State E-Pass defects.
+
+Identify defects through actual browser observations and test execution.
+
+Potential areas to investigate include:
+
+- Missing required-field validation
+- Incorrect email-format acceptance or rejection
+- Mobile segment validation
+- Aadhaar length or digit validation
+- Dropdown default handling
+- Gender selection validation
+- State travel-date validation
+- Incorrect Submitted Details behaviour
+
+These are investigation targets, NOT confirmed defects. Only report an issue as a defect if the actual requirements and observed execution support that conclusion.
+
+Each defect must include:
+
+- Defect ID
+- Module
+- User Story ID
+- Test Case ID, if available
+- Test Data / What Was Entered
+- Steps or Scenario
+- Expected Result
+- Actual Result
+- Severity
+- Priority
+- Status
+
+Severity and priority must be reasonable and consistent.
+
+Do not fabricate defects to reach the required count.
+
+If fewer than eight defects are observed, continue executing suitable negative and boundary tests where time allows. Record only confirmed findings.
+
+Ensure the JSON is valid and contains all documented defects in one consolidated file.
+
+STEP 8 — FINAL VERIFICATION
+
+Before finishing, verify the following:
+
+- "Application Analysis & Requirements.txt" exists and contains findings for both modules.
+- District US-01 through US-09 have acceptance criteria.
+- State US-01 through US-12 have acceptance criteria.
+- Actual element IDs and field types are documented.
+- Validation rules are documented for both modules.
+- "testcases.csv" contains 40–45 cases.
+- Every one of the 21 user stories is covered.
+- Negative/Validation cases represent approximately 60–70% of the test cases.
+- Page Objects exist for both modules.
+- Reusable helper methods are implemented.
+- Test setup and teardown are implemented appropriately.
+- At least 30 automated test methods exist, with at least 15 per module.
+- Tests contain meaningful assertions.
+- Playwright tests have actually been executed.
+- Execution failures have been investigated and fixed where possible.
+- "defects/defect_report.json" exists and is valid JSON.
+- Defect documentation contains actual observations, not fabricated predictions.
+- Existing valid workspace files and folder structure have been preserved.
+- No unnecessary duplicate files or folders have been created.
+
+FINAL INSTRUCTIONS
+
+I have limited assessment time, so work efficiently.
+
+Start by inspecting the CURRENT workspace and immediately fix the missing assessment criteria.
+
+Do not spend time producing a lengthy explanation before implementation.
+
+Do not start the project from scratch if usable code already exists.
+
+Prioritize, in order:
+
+1. Fix the Playwright configuration and existing code.
+2. Complete both Page Objects and reusable helpers.
+3. Ensure at least 30 meaningful automated tests exist.
+4. Run the tests and fix execution failures.
+5. Generate or update the required 40–45 test cases.
+6. Complete the application analysis and acceptance criteria.
+7. Document genuine observed defects.
+8. Perform final verification.
+
+Save every change. Use the integrated terminal. Do not claim that tests passed unless you actually executed them and observed the results.
+
+Complete as much of the assessment as possible in the available time, with executable code and real execution evidence taking priority over explanations.
