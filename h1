@@ -1,0 +1,120 @@
+
+def analyze_attack_surface() -> dict:
+    """Analyze ClaimGuard's documented attack surface and prioritize concrete risks."""
+
+    entry_points = [
+        {"id": "EP01", "name": "Session creation", "description": "POST /sessions accepts an authenticated_policyholder identifier supplied in the request.", "trust_level": "untrusted"},
+        {"id": "EP02", "name": "Chat endpoint", "description": "POST /chat accepts a session ID and user-controlled message.", "trust_level": "untrusted"},
+        {"id": "EP03", "name": "Health endpoint", "description": "GET /health exposes service health information.", "trust_level": "untrusted"},
+        {"id": "EP04", "name": "Claims debug endpoint", "description": "GET /debug/claims returns all claims without authentication.", "trust_level": "untrusted"},
+        {"id": "EP05", "name": "Payout debug endpoint", "description": "GET /debug/payout_requests returns recorded payout requests without authentication.", "trust_level": "untrusted"},
+        {"id": "EP06", "name": "Debug reset endpoint", "description": "POST /debug/reset resets in-memory state without authentication.", "trust_level": "untrusted"},
+        {"id": "EP07", "name": "OpenAPI schema", "description": "GET /openapi.json exposes the API schema without authentication.", "trust_level": "untrusted"},
+        {"id": "EP08", "name": "Interactive API documentation", "description": "GET /docs exposes interactive API documentation without authentication.", "trust_level": "untrusted"},
+        {"id": "EP09", "name": "Claim status tool", "description": "get_claim_status accepts a claim ID and returns claim details including its narrative, without checking session ownership.", "trust_level": "internal"},
+        {"id": "EP10", "name": "Claim filing tool", "description": "file_claim accepts a policyholder ID and arbitrary narrative text that is stored and replayed verbatim.", "trust_level": "internal"},
+        {"id": "EP11", "name": "Payout information tool", "description": "get_payout_info accepts a policyholder ID and exposes payout details including bank-account last four digits.", "trust_level": "internal"},
+        {"id": "EP12", "name": "Payout request tool", "description": "request_payout accepts a claim ID, amount, and note; an override-prefixed note bypasses the intended high-value confirmation.", "trust_level": "internal"},
+        {"id": "EP13", "name": "Denial dispute tool", "description": "dispute_denial accepts a claim ID and reason without documented claim-ownership enforcement.", "trust_level": "internal"},
+        {"id": "EP14", "name": "Session identity field", "description": "The policyholder identity supplied during session creation is an identity trust boundary.", "trust_level": "untrusted"},
+        {"id": "EP15", "name": "User message content", "description": "The chat message can contain malicious instructions, sensitive requests, or attempts to override system rules.", "trust_level": "untrusted"},
+        {"id": "EP16", "name": "Input guard", "description": "The first guardrail check attempts to block malicious user input before worker execution.", "trust_level": "internal"},
+        {"id": "EP17", "name": "LLM worker", "description": "The model interprets requests and invokes claim-management tools.", "trust_level": "internal"},
+        {"id": "EP18", "name": "Tool-result context", "description": "Tool outputs are inserted into the model conversation; claim narratives are not distinguished from trusted instructions.", "trust_level": "internal"},
+        {"id": "EP19", "name": "Output guard", "description": "The final guardrail checks the worker response before returning it to the caller.", "trust_level": "internal"},
+        {"id": "EP20", "name": "Refusal handler", "description": "Blocked input or output is routed to a refusal response.", "trust_level": "internal"},
+        {"id": "EP21", "name": "Claim narrative storage", "description": "New-claim narrative text is persisted without sanitization, escaping, or a documented length limit.", "trust_level": "internal"},
+        {"id": "EP22", "name": "Payout authorization decision", "description": "The worker decides whether a payout request satisfies the high-value confirmation rule.", "trust_level": "internal"},
+        {"id": "EP23", "name": "In-memory claim and payout state", "description": "Application state contains claim and payout records across multiple policyholders.", "trust_level": "internal"},
+        {"id": "EP24", "name": "Policyholder payout records", "description": "Stored payout information includes financial details associated with individual policyholders.", "trust_level": "internal"},
+    ]
+
+    trust_boundaries = [
+        {"id": "TB01", "between": ["EP01", "EP14"], "description": "Untrusted client-supplied identity must be bound to a genuine authenticated principal."},
+        {"id": "TB02", "between": ["EP02", "EP15"], "description": "External chat text enters the application's trusted processing pipeline."},
+        {"id": "TB03", "between": ["EP15", "EP16"], "description": "User input must pass the input guard before reaching decision logic."},
+        {"id": "TB04", "between": ["EP16", "EP17"], "description": "Only permitted requests should reach the model worker."},
+        {"id": "TB05", "between": ["EP17", "EP09"], "description": "Model-generated tool calls must be constrained to the active policyholder's authorization."},
+        {"id": "TB06", "between": ["EP17", "EP10"], "description": "Model-generated claim creation must not permit unauthorized identity selection."},
+        {"id": "TB07", "between": ["EP17", "EP11"], "description": "Payout-information access must enforce policyholder ownership."},
+        {"id": "TB08", "between": ["EP17", "EP12"], "description": "Payout execution must enforce authorization and confirmation independently of model intent."},
+        {"id": "TB09", "between": ["EP17", "EP13"], "description": "Dispute operations must verify ownership of the referenced claim."},
+        {"id": "TB10", "between": ["EP09", "EP18"], "description": "Claim data returned by a tool crosses into model context and must remain untrusted data."},
+        {"id": "TB11", "between": ["EP10", "EP21"], "description": "User-supplied narrative crosses into persistent storage."},
+        {"id": "TB12", "between": ["EP21", "EP18"], "description": "Stored narrative is replayed into a later model turn without a trust label."},
+        {"id": "TB13", "between": ["EP11", "EP24"], "description": "Sensitive payout records must be isolated by policyholder."},
+        {"id": "TB14", "between": ["EP12", "EP22"], "description": "The payout authorization decision must resist unverified override claims."},
+        {"id": "TB15", "between": ["EP17", "EP19"], "description": "Generated content must pass output safety checks before release."},
+        {"id": "TB16", "between": ["EP19", "EP20"], "description": "Blocked outputs must be replaced by a safe refusal."},
+        {"id": "TB17", "between": ["EP04", "EP23"], "description": "Unauthenticated debug access crosses the boundary protecting all claim records."},
+        {"id": "TB18", "between": ["EP05", "EP23"], "description": "Unauthenticated debug access exposes payout-request records."},
+        {"id": "TB19", "between": ["EP06", "EP23"], "description": "Unauthenticated reset access can modify shared application state."},
+        {"id": "TB20", "between": ["EP07", "EP08"], "description": "Public API metadata exposes endpoint and schema information to external callers."},
+        {"id": "TB21", "between": ["EP03", "EP17"], "description": "Public health checks should not disclose internal decision or credential data."},
+        {"id": "TB22", "between": ["EP14", "EP23"], "description": "A session identity must be consistently enforced when accessing shared records."},
+    ]
+
+    data_flows = [
+        {"id": "DF01", "source": "EP01", "destination": "EP14", "data_type": "client-supplied policyholder identity"},
+        {"id": "DF02", "source": "EP02", "destination": "EP15", "data_type": "session identifier and chat message"},
+        {"id": "DF03", "source": "EP15", "destination": "EP16", "data_type": "untrusted prompt text"},
+        {"id": "DF04", "source": "EP16", "destination": "EP17", "data_type": "input approved by guardrail"},
+        {"id": "DF05", "source": "EP17", "destination": "EP09", "data_type": "claim-status tool arguments"},
+        {"id": "DF06", "source": "EP09", "destination": "EP18", "data_type": "claim details and stored narrative"},
+        {"id": "DF07", "source": "EP17", "destination": "EP10", "data_type": "new claim identity and narrative"},
+        {"id": "DF08", "source": "EP10", "destination": "EP21", "data_type": "persistent user-supplied narrative"},
+        {"id": "DF09", "source": "EP21", "destination": "EP18", "data_type": "replayed stored narrative"},
+        {"id": "DF10", "source": "EP17", "destination": "EP11", "data_type": "payout lookup policyholder ID"},
+        {"id": "DF11", "source": "EP11", "destination": "EP24", "data_type": "sensitive payout and bank-account details"},
+        {"id": "DF12", "source": "EP17", "destination": "EP12", "data_type": "claim ID, payout amount, and override note"},
+        {"id": "DF13", "source": "EP12", "destination": "EP22", "data_type": "payout authorization decision inputs"},
+        {"id": "DF14", "source": "EP22", "destination": "EP23", "data_type": "payout request or payout state mutation"},
+        {"id": "DF15", "source": "EP17", "destination": "EP13", "data_type": "claim ID and dispute reason"},
+        {"id": "DF16", "source": "EP13", "destination": "EP23", "data_type": "claim dispute record"},
+        {"id": "DF17", "source": "EP17", "destination": "EP19", "data_type": "model-generated response"},
+        {"id": "DF18", "source": "EP19", "destination": "EP20", "data_type": "blocked response routed to refusal"},
+        {"id": "DF19", "source": "EP19", "destination": "EP02", "data_type": "approved response returned to caller"},
+        {"id": "DF20", "source": "EP04", "destination": "EP23", "data_type": "all stored claim records exposed by debug endpoint"},
+        {"id": "DF21", "source": "EP05", "destination": "EP23", "data_type": "payout-request records exposed by debug endpoint"},
+        {"id": "DF22", "source": "EP06", "destination": "EP23", "data_type": "unauthenticated reset mutation"},
+        {"id": "DF23", "source": "EP07", "destination": "EP02", "data_type": "public API schema and operation metadata"},
+        {"id": "DF24", "source": "EP08", "destination": "EP02", "data_type": "interactive API documentation and request interface"},
+    ]
+
+    prioritized_risks = [
+        {"entry_point_id": "EP04", "exploitability": "high", "impact": "high", "rationale": "The unauthenticated claims debug endpoint exposes every stored claim across policyholders, allowing an external caller to bypass session-level access controls and obtain cross-customer information."},
+        {"entry_point_id": "EP05", "exploitability": "high", "impact": "high", "rationale": "The payout debug endpoint requires no authentication and returns recorded payout requests, exposing financial activity and potentially sensitive claim-linked information."},
+        {"entry_point_id": "EP06", "exploitability": "high", "impact": "high", "rationale": "Any unauthenticated caller can reset shared in-memory state, creating a direct availability and integrity risk for claims and payout workflows."},
+        {"entry_point_id": "EP09", "exploitability": "high", "impact": "high", "rationale": "Claim status lookup lacks a server-side ownership check. A caller who can induce a lookup for another claim may expose that claim's details and its narrative."},
+        {"entry_point_id": "EP11", "exploitability": "high", "impact": "high", "rationale": "Payout information lookup accepts an arbitrary policyholder ID and returns sensitive payout details, including bank-account last four digits, without verifying session ownership."},
+        {"entry_point_id": "EP12", "exploitability": "high", "impact": "high", "rationale": "A high-value payout can bypass separate-turn adjuster confirmation when its note contains an override-prefixed tag; the tag's author and the existence of genuine approval are not validated."},
+        {"entry_point_id": "EP10", "exploitability": "high", "impact": "high", "rationale": "Claim creation accepts arbitrary policyholder IDs and stores narrative text verbatim. This can enable cross-account manipulation and plant persistent indirect prompt-injection content."},
+        {"entry_point_id": "EP18", "exploitability": "high", "impact": "high", "rationale": "A stored claim narrative re-enters the model context as ordinary tool output, without a trusted/untrusted distinction. The model may interpret attacker-controlled text as instructions when the claim is later retrieved."},
+        {"entry_point_id": "EP21", "exploitability": "high", "impact": "high", "rationale": "Unsanitized persistent narrative text provides an indirect-injection storage path. The risk persists beyond the original filing turn and can affect later users or operations if records are replayed."},
+        {"entry_point_id": "EP01", "exploitability": "high", "impact": "high", "rationale": "The session-creation request contains a client-supplied policyholder identity. If that field is trusted without independent authentication, an attacker may establish a session under another identity."},
+        {"entry_point_id": "EP14", "exploitability": "high", "impact": "high", "rationale": "A user-controlled identity is not a trustworthy authorization credential by itself. Identity spoofing at session creation could undermine all downstream ownership assumptions."},
+        {"entry_point_id": "EP02", "exploitability": "medium", "impact": "high", "rationale": "The chat endpoint accepts attacker-controlled prompts. If the input guard misses a malicious request, the worker may attempt unauthorized tool actions or disclose sensitive information."},
+        {"entry_point_id": "EP15", "exploitability": "medium", "impact": "high", "rationale": "Prompt injection and instruction-override text can target model behavior. A keyword-only first layer cannot reliably identify every semantically equivalent malicious request."},
+        {"entry_point_id": "EP16", "exploitability": "medium", "impact": "high", "rationale": "The input guard is an important control but depends on keyword matching and an LLM-judge fallback. Missed or inconsistently classified inputs may reach the worker."},
+        {"entry_point_id": "EP17", "exploitability": "medium", "impact": "high", "rationale": "The model can call tools that read sensitive records and mutate claims or payouts. Model intent alone is not an adequate authorization boundary for financial operations."},
+        {"entry_point_id": "EP22", "exploitability": "high", "impact": "high", "rationale": "The payout authorization decision trusts an override marker without verifying the adjuster's identity or approval record, allowing an asserted approval to substitute for actual authorization."},
+        {"entry_point_id": "EP13", "exploitability": "medium", "impact": "medium", "rationale": "Dispute creation accepts any claim ID according to the recon summary, with no documented ownership validation. This may allow unauthorized disputes against other policyholders' claims."},
+        {"entry_point_id": "EP19", "exploitability": "medium", "impact": "high", "rationale": "The output guard is a last line of defense against unsafe responses, but output filtering cannot undo a sensitive tool action that already occurred inside the worker."},
+        {"entry_point_id": "EP23", "exploitability": "high", "impact": "high", "rationale": "Claims and payout requests share application state across policyholders. Missing authorization checks and public debug access make cross-customer confidentiality and integrity failures consequential."},
+        {"entry_point_id": "EP24", "exploitability": "high", "impact": "high", "rationale": "Payout records contain financial details. An unrestricted policyholder lookup or debug exposure can disclose sensitive information belonging to another customer."},
+        {"entry_point_id": "EP07", "exploitability": "high", "impact": "low", "rationale": "Public OpenAPI metadata can help an attacker enumerate routes and request schemas. The disclosure is primarily reconnaissance unless combined with an underlying authorization flaw."},
+        {"entry_point_id": "EP08", "exploitability": "high", "impact": "low", "rationale": "Public interactive API documentation lowers the effort required to discover and exercise exposed endpoints, including the documented unauthenticated debug routes."},
+        {"entry_point_id": "EP03", "exploitability": "low", "impact": "low", "rationale": "A minimal public health check is often intentional. Its risk is low if it returns only service availability and does not expose configuration, credentials, or internal state."},
+    ]
+
+    return {
+        "entry_points": entry_points,
+        "trust_boundaries": trust_boundaries,
+        "data_flows": data_flows,
+        "prioritized_risks": prioritized_risks,
+    }
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(analyze_attack_surface(), indent=2))
