@@ -1,0 +1,239 @@
+ROLE
+
+Act as a senior QA Automation Engineer, SDET, test architect, requirements analyst, and debugging specialist working directly inside the CURRENT VS Code workspace.
+
+Technology: Playwright + TypeScript + Page Object Model (POM) + reusable helpers + Playwright assertions.
+
+Your goal is to complete the existing assessment, not restart the project. Prioritize missing evaluation criteria, actual test execution, and prompt-driven collaboration evidence. Work quickly and save changes frequently.
+
+IMPORTANT: Do not only explain or generate suggestions. Inspect the workspace, edit the actual files, run the tests in the integrated terminal, fix failures, and verify deliverables. Do not delete correct existing work or restructure the project.
+
+APPLICATION
+
+System: Pandemic District & State E-Pass
+
+District E-Pass URL:
+https://webapps.tekstac.com/SeleniumApp2/Pandemic/DistrictPass.html
+
+State E-Pass URL:
+https://webapps.tekstac.com/SeleniumApp2/Pandemic/StatePass.html
+
+Scope:
+
+- District E-Pass: US-01 to US-09
+- State E-Pass: US-01 to US-12
+- Total: 21 user stories
+
+Use the existing User Stories.txt, application HTML/JavaScript files, assessment instructions, and workspace files as the source of truth.
+
+STEP 1 — INSPECT, RESEARCH AND IDENTIFY ELEMENTS
+
+Immediately inspect the existing workspace and identify the project structure, current implementation, configuration, tests, requirements documents, and available application source files.
+
+Inspect DistrictPass.html, StatePass.html, and PandemicJS.js if available.
+
+For BOTH modules, explicitly identify and verify:
+
+- Actual HTML element IDs and labels.
+- Input types, dropdowns, radio buttons, buttons, and textareas.
+- Inline validation/error-label IDs and result/confirmation containers.
+- Mandatory and optional fields.
+- Default dropdown values and radio-button behaviour.
+- Submission behaviour and success/error messages.
+- Actual validation logic in districtPassSubmit() and stateSubmit().
+- Empty-form and invalid-input behaviour.
+
+Navigate directly to each module URL before interacting with its form. If browser inspection is possible, actually inspect and submit test data. Never invent selectors or claim observations that were not made.
+
+STEP 2 — REQUIREMENTS AND ACCEPTANCE CRITERIA
+
+Update the existing file:
+
+Application Analysis & Requirements.txt
+
+Document:
+
+- Application and module overview.
+- Verified element IDs, labels, field types, and error-label IDs.
+- Acceptance criteria for every District US-01–US-09 and State US-01–US-12.
+- Mandatory and optional fields.
+- Actual validation rules and observed application behaviour.
+- Expected behaviour from the assessment requirements.
+- Validation gaps, including missing email-format, mobile-number, Aadhaar-number, and State travel-date validation where applicable.
+- Empty-form, invalid-input, and successful-submission behaviour.
+- Any discrepancies between required and actual behaviour.
+
+Clearly distinguish documented requirements from behaviour actually observed during execution. Save this document before generating test cases or implementing additional tests.
+
+STEP 3 — TEST CASE GENERATION
+
+Use Application Analysis & Requirements.txt, User Stories.txt, verified element IDs, acceptance criteria, and actual validation rules as explicit context.
+
+Create or update testcases.csv with 40–45 detailed test cases covering ALL 21 user stories.
+
+Use these exact columns:
+
+TC_ID, Module, User_Story_ID, Test_Scenario, Test_Type, Priority, Precondition, Test_Steps, Test_Data, Expected_Result, Actual_Result, Status
+
+Include:
+
+- Positive/success tests.
+- Negative and validation tests.
+- Empty-form and individual mandatory-field tests.
+- Invalid email and non-numeric mobile/Aadhaar values.
+- Partially filled mobile-number segments.
+- Default dropdown and radio-button validation.
+- Invalid State travel-date strings.
+- Boundary and edge cases.
+- Successful submissions and confirmation/result behaviour.
+
+Target distribution:
+
+- Approximately 60–70% negative/validation tests, generally Critical/High priority.
+- Boundary tests: Medium priority.
+- Positive/success tests: Low priority.
+
+Cover every user story and clearly distinguish District from State user stories.
+
+Expected results must follow the assessment requirements and verified application behaviour. Do not fabricate actual results or mark unexecuted tests as passed.
+
+Verify the CSV columns, number of cases, user-story coverage, and test-type distribution.
+
+STEP 4 — IMPLEMENTATION, SETUP, ELEMENT INTERACTION AND TEARDOWN
+
+Implement or fix the existing Playwright + TypeScript framework using Page Object Model.
+
+Required components:
+
+- Valid Playwright configuration and browser setup.
+- District E-Pass page object.
+- State E-Pass page object.
+- Reusable helpers/utilities.
+- Test data helpers.
+- Reusable field-filling and form-submission methods.
+- A helper to fill all valid fields except one specified field.
+- Common assertion/validation helpers.
+- Defect-logging utility.
+- Automated test files for both modules.
+
+Implement AT LEAST 30 automated test methods, with at least 15 for each module.
+
+Use verified element IDs and actual UI elements. Keep actions in page objects/helpers instead of duplicating locator and interaction code in every test.
+
+Tests must:
+
+- Navigate directly to the appropriate module URL.
+- Use actual form elements and realistic test data.
+- Cover acceptance criteria and the test cases created in Step 3.
+- Include meaningful assertions for inline validation, mandatory fields, submission results, and actual application behaviour.
+- Prioritize negative and high-risk validations before happy paths.
+
+Implement explicit setup and teardown:
+
+- Use beforeEach to navigate to the correct form and establish the required initial state.
+- Use afterEach to clean up test-specific resources and perform appropriate teardown.
+- Respect Playwright-managed browser and context lifecycles.
+- Keep tests isolated and prevent one test's data or browser state from affecting another.
+
+Ensure test names and structure make the module, scenario, and intended behaviour clear.
+
+STEP 5 — EXECUTE, DEBUG AND REFINE
+
+Run the tests NOW using the integrated VS Code terminal.
+
+Do not stop after creating code.
+
+For every failure:
+
+1. Inspect the actual error and execution output.
+2. Identify whether the cause is a locator, navigation, timing, test-data, assertion, configuration, or genuine application issue.
+3. Fix automation and configuration problems.
+4. Correct assertions only when observed application behaviour proves the original expectation was incorrect.
+5. Never weaken valid assertions merely to make tests pass.
+6. Re-run failed tests.
+7. Run the complete suite again when time permits.
+
+Verify setup, navigation, element identification, element interaction, test implementation, assertions, reusability, teardown, and test execution.
+
+Update testcases.csv with actual execution results only for tests that were genuinely run.
+
+Save all changes and report real pass/fail counts and any unresolved issues.
+
+STEP 6 — DOCUMENT ACTUAL DEFECTS
+
+Create or update:
+
+defects/defect_report.json
+
+The assessment requires EXACTLY 8 validation defects, with at least 4 for District E-Pass and 4 for State E-Pass.
+
+Each defect must include:
+
+- Defect ID.
+- Module.
+- User Story ID.
+- Test Case ID.
+- Test data / what was entered.
+- Steps or scenario.
+- Expected result.
+- Actual result.
+- Severity.
+- Priority.
+- Status.
+
+Investigate validation gaps, including missing mandatory-field and format validation, where applicable.
+
+Document defects ONLY when supported by actual execution evidence. Never invent defects, fabricate actual results, or claim that an unexecuted test discovered a defect.
+
+If the available execution evidence does not establish eight genuine defects, document only verified defects and clearly report the shortfall. Do not manufacture defects to meet the count.
+
+Validate the JSON syntax and ensure each reported defect has a clear expected-versus-actual difference.
+
+STEP 7 — FINAL VERIFICATION
+
+Before finishing, verify:
+
+1. Application Analysis & Requirements.txt exists and documents both modules, all 21 user stories, verified element IDs, field types, acceptance criteria, and validation rules.
+2. testcases.csv contains 40–45 cases with the exact required columns.
+3. All 21 user stories have test coverage.
+4. Approximately 60–70% of cases are negative/validation scenarios.
+5. Playwright + TypeScript configuration is valid.
+6. Page objects exist for both District and State E-Pass.
+7. At least 30 automated test methods exist, with at least 15 per module.
+8. Tests use meaningful assertions and reliable actual locators.
+9. Setup, direct navigation, element interaction, teardown, and reusable helpers are implemented.
+10. Tests have actually been executed and failures investigated.
+11. defects/defect_report.json is syntactically valid and contains only evidence-based defects.
+12. Existing workspace structure and valid work have been preserved.
+13. All files are saved.
+
+AI COLLABORATION AND PROMPT-EVIDENCE REQUIREMENTS
+
+The assessment separately evaluates the quality of the AI prompts and how the implementation was directed.
+
+Make the work in this conversation explicitly demonstrate these stages:
+
+- Research prompt: inspect the application, source files, HTML IDs, validation logic, and user stories.
+- Requirements prompt: define acceptance criteria for all 21 user stories and document validation rules.
+- Test-case-generation prompt: use the requirements, IDs, acceptance criteria, positive/negative/boundary coverage, distribution, and required CSV columns.
+- Implementation prompt: use the documented acceptance criteria and actual IDs to implement page objects, test methods, helpers, setup, assertions, and teardown.
+- Refinement prompt: use actual execution failures to correct locators, timing, assertions, and code.
+- Validation prompt: verify the deliverables, execution evidence, coverage, and genuine defect documentation.
+
+Keep these stages clearly identified in the generated code comments and documentation where appropriate. Most importantly, actually perform the corresponding work; documentation alone does not replace implementation or execution evidence.
+
+EXECUTION PRIORITY
+
+Time is limited. Work in this order:
+
+1. Inspect existing workspace and identify missing criteria.
+2. Save requirements and acceptance criteria.
+3. Verify element IDs and implement missing page objects/helpers.
+4. Ensure the required CSV and test coverage exist.
+5. Run tests immediately and fix high-impact failures.
+6. Update execution results and document only observed defects.
+7. Perform final verification.
+
+Reuse working code. Avoid unnecessary files, lengthy explanations, and project redesign.
+
+Start immediately by inspecting the CURRENT workspace. Make the changes directly, save them, execute the tests, refine failures, and leave the best possible verified assessment solution in the existing workspace.
