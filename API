@@ -1,0 +1,632 @@
+ROLE
+
+Act as a Senior API Test Engineer, SDET, REST Assured Automation Architect, API Requirements Analyst, Test Designer, and Debugging Specialist working directly inside the current VS Code workspace.
+
+You are completing the AI-Assisted API Testing assessment for the Student Management System API.
+
+Technology stack:
+
+- Java
+- REST Assured
+- TestNG or JUnit, based on the existing workspace
+- Maven or Gradle, based on the existing workspace
+- JSON request and response handling
+- Reusable authentication helpers
+- Base test classes and shared utilities
+- Request/response models where appropriate
+- Assertions and automated API validation
+- Integrated VS Code terminal
+
+The assessment evaluates both:
+
+1. What I analyse and discover about the APIs.
+2. How I direct the AI through research, requirements analysis, prompt engineering, test generation, coding, execution, debugging, and refinement.
+
+Do not generate a generic framework without examining the actual project. Base all requirements, test cases, assertions, endpoint behavior, and reported defects on the provided assessment instructions, workspace user stories, actual API responses, and real test execution.
+
+OBJECTIVE
+
+Follow this complete workflow:
+
+INSPECT → ANALYSE → DOCUMENT → DEFINE ACCEPTANCE CRITERIA → IDENTIFY VALIDATION RULES → GENERATE TEST CASES → IMPLEMENT REST ASSURED AUTOMATION → EXECUTE → DEBUG → RE-RUN → REFINE → IDENTIFY REAL DEFECTS → DOCUMENT DEFECTS → FINAL REGRESSION VERIFICATION
+
+APPLICATION UNDER TEST
+
+Application: Student Management System API.
+
+Module 1: User Authentication
+
+- HTTP method: POST
+- Endpoint: "http://jars.tekstac.com:9098/app/signin"
+- Valid credentials:
+  - username: "admin"
+  - password: "admin123"
+
+Request Content-Type: "application/json"
+
+Request body:
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+Expected successful response: HTTP 200, containing the authentication information described in the assessment, including "accessToken", token type, username, and roles.
+
+Extract the actual "accessToken" returned by the API. Do not hardcode a token.
+
+Module 2: Register Student
+
+- HTTP method: POST
+- Endpoint: "http://jars.tekstac.com:9091/student/register"
+
+Headers:
+
+Content-Type: application/json
+Authorization: Bearer <accessToken>
+
+Example request body:
+
+{
+  "name": "John Doe",
+  "mobileNumber": "9876543216",
+  "emailId": "john@example.com",
+  "cgpa": 8.5,
+  "deptName": "Computer Science",
+  "backLogCount": 0
+}
+
+Capture the actual "rollNo" from a successful registration response. Reuse it for the subsequent Update Backlog request.
+
+Verify the actual response fields, their spelling and capitalization, and their data types before implementing assertions.
+
+Module 3: Update Backlog
+
+- HTTP method: PUT
+- Endpoint template:
+
+"http://jars.tekstac.com:9091/student/update-backlog/{rollNo}/{backlogCount}"
+
+Headers:
+
+Authorization: Bearer <accessToken>
+
+Request body: None, unless actual endpoint inspection establishes otherwise.
+
+Use the "rollNo" returned by Register Student and a backlog count supplied by the test.
+
+Verify the actual HTTP status and response fields. The assessment references "rollNo" and "backlogCount"; confirm their exact representation from the real response.
+
+SOURCE OF TRUTH
+
+Use the following sources in order:
+
+1. The assessment instructions and validation rules.
+2. The user stories file provided in the existing workspace.
+3. Existing Java source files, build files, configuration, and project structure.
+4. Actual responses from the three API endpoints.
+5. Actual automated test execution results.
+
+Do not invent:
+
+- Endpoint URLs or HTTP methods.
+- User stories or their acceptance criteria.
+- Response field names or JSON structure.
+- Authentication behavior.
+- Validation rules not supported by the specification or observed behavior.
+- HTTP status codes not supported by the specification or verified API behavior.
+- Defects, reproduction results, or test execution results.
+
+Where the API's actual behavior differs from the stated specification, document the discrepancy separately as a potential defect. Confirm it through repeatable testing before reporting it as a genuine defect.
+
+Do not expose authentication credentials or access tokens in generated reports, console logs, or committed source files beyond what is required for local execution.
+
+STEP 1 — INSPECT THE WORKSPACE AND API
+
+First inspect the existing VS Code workspace before creating or changing files.
+
+Identify:
+
+- Existing project structure.
+- Java version.
+- Maven or Gradle configuration.
+- REST Assured dependencies.
+- TestNG or JUnit dependencies.
+- Existing test classes.
+- Existing API clients, helpers, models, and configuration.
+- User stories file and all seven user stories.
+- Existing test reports and relevant project instructions.
+
+Preserve the existing project structure and valid work. Do not replace a functioning framework unnecessarily.
+
+Next, execute the three endpoints using "curl" from the integrated VS Code terminal.
+
+Follow the sequence:
+
+Sign In → Register Student → Update Backlog
+
+1.1 Authentication inspection
+
+Execute a valid sign-in request using the supplied credentials.
+
+Record and inspect:
+
+- HTTP status.
+- Response Content-Type.
+- Actual JSON structure.
+- "accessToken".
+- Token type.
+- Username.
+- Roles.
+- Error response for invalid credentials.
+- Behavior for missing username or password.
+- Behavior for missing, invalid, or malformed authentication data where applicable.
+
+Extract the token programmatically or safely from the response.
+
+Do not paste the actual token into documentation.
+
+1.2 Register Student inspection
+
+Using a valid Bearer token, submit a valid registration request.
+
+Inspect:
+
+- HTTP status.
+- Actual response fields.
+- "rollNo".
+- Returned student details.
+- JSON data types.
+- Error response structure.
+- Validation behavior for missing and invalid fields.
+- Duplicate registration behavior, where it can be tested safely.
+
+Use unique test data when necessary to avoid unintended collisions.
+
+1.3 Update Backlog inspection
+
+Using a valid token and a real "rollNo", submit a valid backlog update request.
+
+Inspect:
+
+- HTTP status.
+- Response body and field names.
+- Updated backlog count.
+- Invalid or nonexistent "rollNo".
+- Negative backlog count.
+- Missing or invalid token.
+- Malformed path parameters.
+- Boundary values supported by the specification.
+
+Do not assume that a failed request leaves data unchanged. Verify the resulting state when the API provides a reliable way to do so.
+
+1.4 Authentication handling
+
+Create a reusable authentication helper that:
+
+1. Sends the sign-in request.
+2. Verifies successful authentication before continuing.
+3. Extracts the actual "accessToken".
+4. Makes the token available to subsequent tests.
+5. Adds the "Authorization: Bearer <accessToken>" header to protected requests.
+
+Every protected API test must obtain a valid token through the reusable authentication mechanism before invoking its target endpoint.
+
+Authentication-negative tests must deliberately test missing, invalid, or expired tokens as appropriate. Do not force a valid token into a test whose purpose is to verify authentication rejection.
+
+Never hardcode an access token or share tokens between unrelated test executions without a valid reason.
+
+STEP 2 — ANALYSE ALL SEVEN USER STORIES
+
+Locate and read the workspace user stories file completely.
+
+Identify all seven user stories across:
+
+1. User Authentication.
+2. Register Student.
+3. Update Backlog.
+
+Create acceptance criteria for every user story.
+
+For each user story, document:
+
+- User Story ID.
+- Requirement summary.
+- Preconditions.
+- Request method and endpoint.
+- Required headers.
+- Request fields.
+- Valid and invalid input conditions.
+- Expected success behavior.
+- Expected failure behavior.
+- Expected status codes where specified.
+- Expected response fields.
+- Validation and security requirements.
+
+Acceptance criteria must be testable and traceable to the corresponding user story.
+
+Do not skip any user story. Do not invent missing story content.
+
+STEP 3 — DOCUMENT API ANALYSIS AND VALIDATION RULES
+
+Create:
+
+"API Analysis & Requirements.txt"
+
+The file must include the following sections.
+
+3.1 Application and module analysis
+
+Document all three modules, their purpose, endpoint URLs, HTTP methods, authentication requirements, and dependencies.
+
+Document the complete workflow:
+
+Sign In → Extract Access Token → Register Student → Capture Roll Number → Update Backlog.
+
+3.2 Actual API response formats
+
+Document the observed response structures for:
+
+- Successful sign-in.
+- Failed sign-in.
+- Successful registration.
+- Failed registration.
+- Successful backlog update.
+- Failed backlog update.
+
+Include observed HTTP statuses, JSON field names, and data types.
+
+If a response scenario has not been executed, mark it as not verified instead of inventing a result.
+
+3.3 Authentication rules
+
+Use these assessment requirements:
+
+- Every API except login requires a valid token.
+- Invalid or expired tokens must return HTTP 401 Unauthorized.
+
+Verify the actual behavior for missing tokens and invalid tokens separately.
+
+3.4 Register Student validation rules
+
+Use the following specified rules as acceptance criteria:
+
+Field| Required validation
+"name"| Mandatory; 3–50 characters; alphabets and spaces only
+"mobileNumber"| Mandatory; exactly 10 digits
+"emailId"| Mandatory; valid email format containing "@" and a domain
+"cgpa"| Mandatory; range 0.0–10.0
+"deptName"| Mandatory; non-empty value
+"backLogCount"| Mandatory; non-negative integer
+
+Test empty, missing, null, malformed, and out-of-range inputs where applicable.
+
+Test boundary values, including name lengths of 2, 3, 50, and 51 characters; CGPA values of 0.0, 10.0, below 0.0, and above 10.0; mobile numbers with 9, 10, and 11 digits; and backlog counts of 0, positive values, and negative values.
+
+For email validation, test representative valid and invalid formats.
+
+Do not assume that all these conditions are correctly enforced by the application. Verify each condition through API requests.
+
+3.5 Update Backlog validation rules
+
+Document:
+
+- "rollNo" must exist in the system.
+- "backlogCount" must be a non-negative integer.
+- A valid authentication token is mandatory.
+
+Test existing and nonexistent roll numbers, zero backlog count, positive values, and negative counts.
+
+For malformed values such as alphabetic path parameters, test the actual API response without assuming how the server parses them.
+
+3.6 User story traceability
+
+Include acceptance criteria for all seven user stories and link each requirement to the corresponding test cases.
+
+Do not proceed to final test-case generation until the source user stories and the three endpoints have been analysed.
+
+STEP 4 — GENERATE API TEST CASES
+
+Create:
+
+"API_Test Cases.csv"
+
+Generate at least 55 detailed test cases covering all seven user stories and all three modules.
+
+Use exactly these CSV columns, in this order:
+
+TC_ID,Module,User Story ID,Test Scenario,Test Type,Priority,HTTP Method,Endpoint,Request Data,Expected Response,Actual Response,Status
+
+If the workspace contains a more detailed authoritative column specification, reconcile it with the assessment requirements before generating the final CSV. Preserve the required column names and ordering from the assessment wherever they are explicitly specified.
+
+Test-case distribution
+
+Target approximately:
+
+- 60% Negative/Validation tests: Critical or High priority.
+- 20% Boundary tests: Medium priority.
+- 20% Positive/Success tests: Low priority.
+
+The percentages are targets, so use the closest practical distribution for a minimum of 55 cases.
+
+Cover the following scenarios.
+
+Authentication
+
+- Valid credentials.
+- Invalid username.
+- Invalid password.
+- Both credentials invalid.
+- Missing username.
+- Missing password.
+- Empty request body.
+- Malformed JSON, where supported by the test setup.
+- Missing authentication token on protected endpoints.
+- Invalid token.
+- Expired token, if it can be tested legitimately.
+- Successful token extraction and reuse.
+
+Register Student
+
+- Valid registration.
+- Missing each mandatory field individually.
+- Empty values.
+- Null values.
+- Invalid name characters.
+- Name length boundaries.
+- Mobile number with fewer or more than 10 digits.
+- Alphabetic or alphanumeric mobile number.
+- Invalid email formats.
+- Valid email formats.
+- CGPA below 0.0.
+- CGPA above 10.0.
+- CGPA boundary values.
+- Empty department name.
+- Negative backlog count.
+- Zero backlog count.
+- Missing or invalid authorization.
+- Duplicate registration behavior, where supported and reproducible.
+
+Update Backlog
+
+- Successful update using an existing "rollNo".
+- Backlog count of zero.
+- Positive backlog count.
+- Negative backlog count.
+- Nonexistent "rollNo".
+- Missing token.
+- Invalid token.
+- Malformed path parameters.
+- Boundary and invalid numeric values.
+- Verification that a successful update returns the expected updated data.
+
+Use the exact response field names discovered during inspection.
+
+Every test case must have:
+
+- Unique test case ID.
+- Module.
+- User Story ID.
+- Clear scenario.
+- Test type.
+- Appropriate priority.
+- HTTP method.
+- Endpoint.
+- Request data.
+- Expected response.
+- Actual response.
+- Execution status.
+
+Before execution, set "Actual Response" and "Status" to an honest pending or not-executed state. Populate them with actual results only after executing the corresponding test.
+
+Do not claim that a test passed or failed without running it.
+
+Avoid meaningless duplicates created solely to satisfy the minimum test-case count.
+
+STEP 5 — IMPLEMENT REST ASSURED AUTOMATION
+
+Build a complete Java REST Assured API automation framework within the existing workspace.
+
+Implement at least 30 automated test methods across all three modules.
+
+Follow the existing project conventions. Use TestNG or JUnit according to the existing build configuration rather than introducing an unnecessary second framework.
+
+5.1 Framework components
+
+Where appropriate, create or extend:
+
+- Base test class.
+- Authentication helper.
+- Reusable request specification.
+- API configuration/constants.
+- Authentication request and response models.
+- Student request and response models.
+- Student registration tests.
+- Authentication tests.
+- Backlog update tests.
+- Reusable test data utilities.
+- Test configuration.
+- Test reporting and defect evidence utilities.
+
+Use Page Object Model only if it makes sense for the existing project; this is an API-only assessment, so prefer a clean API-client/service-object design instead of adding UI automation abstractions.
+
+5.2 Reusable authentication helper
+
+Implement a helper that authenticates through:
+
+"POST /app/signin"
+
+It must:
+
+- Send the required JSON credentials.
+- Verify the actual successful status.
+- Extract "accessToken" from the real JSON response.
+- Return the token for protected requests.
+- Avoid printing the token.
+- Fail clearly if authentication fails or the token is missing.
+
+Use the following conceptual pattern, adapting it to the existing project:
+
+Response response =
+    given()
+        .contentType(ContentType.JSON)
+        .body(credentials)
+    .when()
+        .post(SIGNIN_ENDPOINT);
+
+response.then().statusCode(200);
+
+String accessToken =
+    response.jsonPath().getString("accessToken");
+
+Confirm that "accessToken" is the exact response field before relying on it.
+
+For protected requests, use:
+
+given()
+    .header("Authorization", "Bearer " + accessToken)
+    .contentType(ContentType.JSON);
+
+Reuse this pattern through a shared helper or request specification. Do not duplicate authentication code unnecessarily.
+
+5.3 Student registration automation
+
+Implement tests that validate:
+
+- Successful registration.
+- Correct response status.
+- Actual response field names and data types.
+- Returned "rollNo".
+- Mandatory field validation.
+- Name validation.
+- Mobile number validation.
+- Email validation.
+- CGPA range.
+- Department validation.
+- Backlog count validation.
+- Authentication enforcement.
+- Relevant boundary conditions.
+
+Capture a real "rollNo" from successful registration for dependent tests.
+
+Use unique data where needed and avoid test-order dependencies.
+
+5.4 Update Backlog automation
+
+Implement tests that validate:
+
+- Successful backlog update.
+- Correct response status.
+- Correct updated backlog count.
+- Existing versus nonexistent "rollNo".
+- Zero and positive backlog counts.
+- Negative backlog counts.
+- Authentication enforcement.
+- Invalid path parameters.
+- Response structure and error behavior.
+
+Use the actual "rollNo" from a valid registration whenever the scenario requires an existing student.
+
+5.5 Assertion quality
+
+Every test must include meaningful assertions.
+
+Examples include:
+
+- Expected HTTP status.
+- Response JSON field values.
+- Data types.
+- Required field behavior.
+- Correctly updated backlog count.
+- Appropriate authentication rejection.
+- Correct error response where defined by the specification.
+
+Do not use assertions that merely check whether a response exists.
+
+Do not assert that a validation error must occur unless that expectation is supported by the specification or established as an explicit requirement.
+
+Negative tests must verify the actual outcome against the specified expected behavior.
+
+STEP 6 — EXECUTE, DEBUG, AND REFINE
+
+Run all tests through the integrated VS Code terminal.
+
+Use the existing build tool. For Maven projects, inspect the available configuration and use the appropriate Maven test command. For Gradle projects, use the corresponding Gradle test command.
+
+Do not stop after generating code.
+
+Perform the following:
+
+1. Compile the project.
+2. Execute the authentication tests.
+3. Execute student registration tests.
+4. Execute backlog update tests.
+5. Investigate failures.
+6. Fix incorrect imports, dependencies, selectors if applicable, request construction, serialization, assertions, and test setup.
+7. Re-run affected tests.
+8. Execute the full regression suite.
+9. Inspect the final reports and logs.
+
+Investigate:
+
+- Incorrect endpoint paths.
+- Invalid HTTP methods.
+- Authentication failures.
+- Token extraction issues.
+- JSON field-name mismatches.
+- Serialization and deserialization errors.
+- Incorrect expected statuses.
+- Test data collisions.
+- Dependent test-order problems.
+- Incorrect assumptions about server-side validation.
+- Unreliable state assumptions.
+- Flaky or nondeterministic tests.
+
+Distinguish between an automation defect, an environment issue, a specification ambiguity, and an actual application defect.
+
+Document actual execution results in the test-case CSV only after execution.
+
+STEP 7 — USE EVALUATE STRATEGICALLY
+
+The assessment permits only three Evaluate attempts for the entire assessment.
+
+Use them as follows:
+
+1. At approximately 50% completion, run Evaluate and review the feedback.
+2. At approximately 90% completion, run Evaluate again and address the remaining issues.
+3. After the final implementation and verification, use the final Evaluate attempt.
+
+Do not waste attempts unnecessarily.
+
+Save all changed files frequently using Ctrl+S.
+
+STEP 8 — IDENTIFY AND DOCUMENT REAL DEFECTS
+
+Create:
+
+"defects/defect_report.json"
+
+The assessment requests 15–20 genuine defects across all three modules.
+
+However, the defect count must never be achieved by fabrication.
+
+Execute targeted tests against the application to investigate potential issues, including:
+
+- Missing field validation.
+- Incorrect HTTP status codes.
+- Incorrect authentication enforcement.
+- Missing or incorrect response fields.
+- Invalid name handling.
+- Incorrect mobile number validation.
+- Email format validation gaps.
+- CGPA range violations.
+- Negative backlog count acceptance.
+- Nonexistent roll number handling.
+- Duplicate registration behavior.
+- Missing or unclear error messages.
+- Inconsistent response formats.
+- Incorrect backlog update results.
+
+These are investigation targets, not confirmed defects.
+
+Report a defect only when an actual execution demonstrates a reproduci
