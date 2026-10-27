@@ -1,0 +1,574 @@
+ROLE
+
+Act as a Senior REST Assured Automation Engineer, SDET, Test Architect, API Validation Specialist, TestNG Debugging Specialist, and Assessment Evaluation Remediation Expert working directly inside the CURRENT VS Code workspace.
+
+I have already completed an initial implementation of the AI-Assisted API Testing assessment for the Student Management System API.
+
+The first assessment evaluation scored 18/33.
+
+Do not recreate the project from scratch. Inspect the existing implementation, identify the precise gaps described below, preserve valid work, and make targeted changes to improve the assessment score.
+
+Your objective is to satisfy the evaluator's explicit requirements and target at least 27/33, without fabricating execution results or changing valid application behavior.
+
+TECHNOLOGY
+
+- Java
+- REST Assured
+- TestNG or the framework already configured in the project
+- Maven or Gradle, based on the existing workspace
+- JSON request/response handling
+- Reusable authentication helpers
+- Automated API tests
+- HTML test reporting, such as ExtentReports or an existing equivalent
+- Integrated VS Code terminal
+
+EXISTING ASSESSMENT FEEDBACK
+
+The evaluator reported these specific problems.
+
+1. Authentication test implementation
+
+Current status:
+
+- Only 5 test methods were identified for US-01 and US-02.
+- At least 7 authentication test methods are required.
+- Missing credential scenarios.
+- Token format verification is missing or incomplete.
+
+2. Registration test implementation
+
+Current status:
+
+- Only 10 methods were identified for US-03 through US-05.
+- At least 20 registration test methods are required.
+- Critical negative scenarios are missing, including:
+  - Invalid CGPA.
+  - Invalid mobile number.
+  - Duplicate roll number or duplicate registration behavior, as applicable to the actual API.
+
+3. Backlog Update test implementation
+
+Current status:
+
+- Only 8 methods were identified.
+- TestNG references additional methods that are not present in the corresponding test class.
+- Negative scenarios are incomplete.
+- Module-specific cleanup and defect-report finalization are missing.
+
+4. Test-case generation
+
+Current status:
+
+- Test cases cover the three modules and seven user stories.
+- Negative/validation distribution does not consistently meet the required 60% target.
+- Several cases are generic or security-focused rather than derived from the specified field validations.
+- Priority mapping differs between the CSV files.
+- Derivation from user stories is insufficiently explicit.
+
+5. Prompt engineering
+
+Current status:
+
+- Generation prompts lack explicit test distribution targets and complete derivation from all seven user stories.
+- Implementation prompts do not fully specify reusable helper structures for all three endpoints or every validation rule.
+- Only one refinement exchange was identified; the iterative testing-feedback-improvement process is insufficiently demonstrated.
+
+6. Framework setup and reporting
+
+Current status:
+
+- Authentication token storage and base URL configuration exist.
+- Reporting initialization is missing.
+- No reporting framework teardown/flush is configured.
+
+7. API cleanup
+
+Current status:
+
+- Teardown clears the authentication token.
+- The required "defects/defect_report.json" is absent.
+- Defects were documented in a text file rather than the required JSON file.
+- The defect-report finalization requirement is unmet.
+
+8. Test method count and execution evidence
+
+Current status:
+
+- Only 23 automated test methods were identified across the modules.
+- The evaluator requires at least 30.
+- Missing registration and backlog negative validations are the primary gaps.
+- Execution evidence covering all modules is incomplete.
+
+OBJECTIVE
+
+Prioritize the evaluator's documented deficiencies in this order:
+
+1. Inspect and reconcile existing source files and test configurations.
+2. Implement sufficient real automated test methods.
+3. Complete registration negative and boundary validations.
+4. Complete authentication test coverage.
+5. Complete backlog negative and boundary validations.
+6. Resolve TestNG references to nonexistent methods.
+7. Add test reporting initialization and finalization.
+8. Create the mandatory valid JSON defect report.
+9. Correct CSV test-case distribution and traceability.
+10. Demonstrate multiple genuine refinement cycles.
+11. Compile and execute the complete test suite.
+12. Verify all required files and produce a truthful final summary.
+
+Do not modify unrelated components unnecessarily.
+
+API SPECIFICATION
+
+Module 1: Authentication
+
+Method: POST
+
+Endpoint:
+
+"http://jars.tekstac.com:9098/app/signin"
+
+Valid credentials:
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+Expected successful status: HTTP 200.
+
+The successful response is expected to contain:
+
+- "accessToken"
+- Token type
+- Username
+- Roles
+
+Inspect the existing implementation and actual API response to verify exact JSON field names and types.
+
+Authentication tests must cover valid credentials, invalid credentials, missing credentials, empty request data, response fields, and token verification.
+
+A valid access token must be extracted dynamically and reused for protected endpoints.
+
+Module 2: Register Student
+
+Method: POST
+
+Endpoint:
+
+"http://jars.tekstac.com:9091/student/register"
+
+Required headers:
+
+- "Content-Type: application/json"
+- "Authorization: Bearer <accessToken>"
+
+Example valid payload:
+
+{
+  "name": "John Doe",
+  "mobileNumber": "9876543216",
+  "emailId": "john@example.com",
+  "cgpa": 8.5,
+  "deptName": "Computer Science",
+  "backLogCount": 0
+}
+
+Assessment validation rules:
+
+- "name": mandatory, 3–50 characters, alphabets and spaces only.
+- "mobileNumber": mandatory, exactly 10 digits.
+- "emailId": mandatory, valid email format with "@" and a domain.
+- "cgpa": mandatory, range 0.0–10.0.
+- "deptName": mandatory and non-empty.
+- "backLogCount": mandatory, non-negative integer.
+
+A successful registration returns a "rollNo" that must be captured and reused where appropriate.
+
+Test duplicate registration or duplicate roll-number handling only according to the actual API's supported behavior and reproducible results.
+
+Module 3: Update Backlog
+
+Method: PUT
+
+Endpoint template:
+
+"http://jars.tekstac.com:9091/student/update-backlog/{rollNo}/{backlogCount}"
+
+Required header:
+
+"Authorization: Bearer <accessToken>"
+
+Request body: None.
+
+Assessment rules:
+
+- "rollNo" must exist in the system.
+- "backlogCount" must be a non-negative integer.
+- Authentication is mandatory.
+
+Use a real "rollNo" for valid-update tests.
+
+Test nonexistent roll numbers, negative backlog counts, malformed path parameters, and missing or invalid authentication.
+
+Do not invent response field names or status codes.
+
+STEP 1 — INSPECT BEFORE MODIFYING
+
+Inspect the current workspace, including:
+
+- "pom.xml" or Gradle build files.
+- Authentication test class.
+- Student registration test class.
+- Backlog update test class.
+- Base test class.
+- Authentication helper.
+- API client/request specification.
+- Request and response models.
+- TestNG XML or JUnit configuration.
+- All test-case CSV files.
+- Existing defect reports.
+- Existing report configuration and listeners.
+- The seven-user-stories file.
+- Any evaluation feedback or generated execution reports.
+
+Search for "@Test", TestNG "dependsOnMethods", test methods referenced by configuration, and helper methods.
+
+Identify:
+
+- Actual number of executable test methods.
+- Missing or duplicate test methods.
+- Invalid TestNG method references.
+- Tests that are never discovered.
+- Tests without assertions.
+- Tests that incorrectly depend on execution order.
+- Existing reporting utilities.
+- Existing defect documentation that can be converted into JSON.
+
+Do not delete valid existing work.
+
+Before modifying files, make a concise internal remediation checklist and then implement the changes.
+
+STEP 2 — AUTHENTICATION: IMPLEMENT AT LEAST 7 TEST METHODS
+
+Ensure the authentication test class contains at least 7 distinct, discoverable automated test methods covering the actual user stories US-01 and US-02.
+
+Cover these scenarios where supported by the API specification:
+
+1. Successful login with valid credentials.
+2. Invalid username.
+3. Invalid password.
+4. Invalid username and password.
+5. Missing username.
+6. Missing password.
+7. Empty or missing request body.
+8. Successful response contains the expected authentication fields.
+9. Access token is non-empty and has the expected format.
+10. Missing or invalid token is rejected by a protected endpoint.
+
+At least 7 separate test methods are mandatory; the additional scenarios above can increase coverage further.
+
+Avoid duplicate tests that assert exactly the same behavior without a distinct purpose.
+
+Verify token format only to the extent supported by the actual token implementation. For example, verify JWT structure only if the returned token is actually a JWT. Do not decode or validate a token by assuming an unsupported format.
+
+Negative authentication tests must verify actual status codes and error behavior against the documented specification and observed API responses.
+
+Do not hardcode a successful token.
+
+STEP 3 — REGISTRATION: IMPLEMENT AT LEAST 20 TEST METHODS
+
+Ensure the registration test class contains at least 20 distinct, discoverable automated test methods covering US-03 through US-05.
+
+Prioritize validation-focused tests.
+
+Implement separate methods for the following scenarios wherever the API and test environment allow them:
+
+1. Successful registration.
+2. Missing name.
+3. Empty name.
+4. Name shorter than 3 characters.
+5. Name exactly 3 characters.
+6. Name exactly 50 characters.
+7. Name longer than 50 characters.
+8. Name containing digits.
+9. Name containing special characters.
+10. Missing mobile number.
+11. Mobile number containing 9 digits.
+12. Mobile number containing 11 digits.
+13. Mobile number containing alphabetic characters.
+14. Missing email.
+15. Invalid email without "@".
+16. Invalid email without a domain.
+17. Missing CGPA.
+18. CGPA below 0.0.
+19. CGPA above 10.0.
+20. CGPA equal to 0.0.
+21. CGPA equal to 10.0.
+22. Missing department.
+23. Empty department.
+24. Missing backlog count.
+25. Negative backlog count.
+26. Zero backlog count.
+27. Missing authentication token.
+28. Invalid authentication token.
+29. Duplicate student registration behavior.
+30. Invalid or malformed request payload.
+
+The list contains more than 20 scenarios. Implement at least 20 separate test methods, favoring critical negative and boundary scenarios first.
+
+For mandatory fields, test omitted fields and explicit null/empty values where relevant. Do not combine unrelated invalid fields in every test, because the cause of a failure would be ambiguous.
+
+Use a valid payload baseline and modify only the target field in each isolated validation test.
+
+For successful registrations, generate unique student data to avoid accidental collisions. Capture the actual returned "rollNo".
+
+Do not assert that a duplicate "rollNo" must be rejected unless the API specification establishes that requirement. Investigate whether the roll number is server-generated, whether duplicate registration is possible, and what the actual response demonstrates.
+
+If the API accepts invalid values contrary to the specification, record the observed result and link it to a confirmed defect.
+
+STEP 4 — BACKLOG UPDATE: IMPLEMENT AT LEAST 10 TEST METHODS
+
+Ensure the backlog update test class contains at least 10 distinct, discoverable automated test methods.
+
+Cover:
+
+1. Successful update with an existing "rollNo".
+2. Backlog count equal to zero.
+3. Positive backlog count.
+4. Negative backlog count.
+5. Nonexistent "rollNo".
+6. Missing token.
+7. Invalid token.
+8. Alphabetic backlog count.
+9. Malformed "rollNo".
+10. Large backlog count or another meaningful boundary case.
+
+Add additional tests where justified by the specification and actual behavior.
+
+Every valid update test must use a real "rollNo" obtained from a successful registration or a verified existing test fixture.
+
+Because backlog update parameters are path parameters, verify how the server actually handles malformed and negative values. Do not assume every malformed path can be converted to an integer by the application.
+
+Do not rely on a test running immediately after a specific method unless the framework explicitly supports and correctly configures that dependency.
+
+Prefer independent setup that authenticates and creates the required student when needed.
+
+STEP 5 — FIX TEST DISCOVERY AND TESTNG REFERENCES
+
+Inspect all test configuration files and annotations.
+
+Resolve every "dependsOnMethods" reference that points to a missing or incorrectly named method.
+
+Ensure:
+
+- Referenced methods exist.
+- Test class names match configuration.
+- Tests are discoverable by the selected framework.
+- The test suite includes authentication, registration, and backlog modules.
+- No required test is silently excluded.
+- Dependencies do not cause unnecessary skips.
+- Negative authentication tests remain independent of successful-login setup where appropriate.
+
+Count actual test methods by module, not merely helper methods.
+
+Target at least:
+
+- Authentication: 7 test methods.
+- Registration: 20 test methods.
+- Backlog Update: 10 test methods.
+
+These targets provide a buffer above the overall 30-method requirement.
+
+If a specific scenario cannot safely be implemented because the API is unavailable or the specification is ambiguous, implement the other valid scenarios first and explain the limitation honestly.
+
+STEP 6 — IMPLEMENT REUSABLE HELPERS FOR ALL THREE ENDPOINTS
+
+Preserve and improve the existing framework.
+
+Create or update reusable components for:
+
+Authentication helper
+
+- Sends "POST /app/signin".
+- Extracts "accessToken" from the actual response.
+- Verifies successful authentication.
+- Avoids logging secrets.
+- Provides a reusable authenticated request specification.
+
+Registration helper or API client
+
+- Builds the registration request.
+- Uses the correct JSON field names.
+- Adds a Bearer token.
+- Sends POST requests to "/student/register".
+- Returns the actual REST Assured response.
+- Supports isolated modification of individual request fields for negative tests.
+
+Backlog helper or API client
+
+- Adds the Bearer token.
+- Constructs the update URL with the real "rollNo" and backlog count.
+- Sends PUT requests without an unnecessary body.
+- Returns the actual response.
+
+Shared configuration
+
+- Centralize the base URLs or endpoint constants.
+- Preserve the existing authentication and registration service ports.
+- Keep the request Content-Type correct.
+- Use a fresh authentication token where appropriate.
+- Avoid duplicated request-building logic.
+- Do not hardcode roll numbers returned from earlier executions.
+
+Every protected test must authenticate before invoking its target endpoint, except tests intentionally verifying missing, invalid, or expired-token behavior.
+
+STEP 7 — ADD REPORT INITIALIZATION AND FINALIZATION
+
+The evaluator explicitly identified missing reporting setup and report teardown.
+
+Inspect the existing reporting dependencies first.
+
+If no reporting framework exists, add a compatible HTML reporting framework, preferably ExtentReports if supported by the existing build.
+
+Implement:
+
+1. Report initialization before tests begin.
+2. Test creation and result logging.
+3. Logging of meaningful request/response evidence, with secrets redacted.
+4. Pass/fail/skip reporting.
+5. Report flushing after all tests complete.
+6. A stable HTML report output location.
+7. Cleanup that does not prevent the final report from being written.
+
+For TestNG, use appropriate lifecycle methods or a listener.
+
+For JUnit, use an appropriate extension or lifecycle hook.
+
+Do not introduce an incompatible reporting dependency or duplicate an existing report implementation.
+
+Ensure report flushing occurs even if tests fail.
+
+STEP 8 — CREATE THE REQUIRED DEFECT REPORT
+
+Create this exact path:
+
+"defects/defect_report.json"
+
+The assessment expects defect documentation in JSON format. A text file alone does not satisfy this requirement.
+
+Inspect any existing defect notes and convert confirmed findings into the required JSON structure.
+
+Use a valid JSON array or the schema already specified in the assessment.
+
+For each confirmed defect, include at least:
+
+- "defectId"
+- "title"
+- "module"
+- "userStoryId"
+- "testCaseId"
+- "endpoint"
+- "httpMethod"
+- "severity"
+- "priority"
+- "stepsToReproduce"
+- "requestData"
+- "expectedResult"
+- "actualResult"
+- "actualStatusCode"
+- "evidence"
+- "reproducible"
+
+Use the actual schema required by the existing assessment if it is more specific than this suggested structure.
+
+Document only defects confirmed by execution.
+
+Investigate validation gaps, incorrect status codes, authentication bypass, response-field errors, duplicate registration behavior, CGPA validation, mobile-number validation, negative backlog counts, nonexistent roll numbers, and error-message behavior.
+
+These are investigation targets, not pre-confirmed defects.
+
+If no defects have yet been verified, create a valid JSON structure with an empty array or explicit truthful pending status, according to the assessment's required schema. Do not populate it with fabricated results.
+
+Never claim that 15–20 defects exist unless that number of distinct genuine defects has been confirmed.
+
+STEP 9 — CORRECT TEST-CASE DISTRIBUTION AND TRACEABILITY
+
+Inspect both the existing CSV test-case files and the seven user stories.
+
+Preserve the existing required filename if the evaluator expects it. The primary required filename is:
+
+"API_Test Cases.csv"
+
+Do not create multiple conflicting CSV files unnecessarily.
+
+Ensure the file has the exact assessment-required columns. Based on the assessment, the expected structure is:
+
+- "TC_ID"
+- "Module"
+- "User Story ID"
+- "Test Scenario"
+- "Test Type"
+- "Priority"
+- "HTTP Method"
+- "Endpoint"
+- "Request Data"
+- "Expected Response"
+- "Actual Response"
+- "Status"
+
+If an existing evaluator-provided schema uses slightly different exact names, use the specified schema rather than inventing alternatives.
+
+Ensure at least 55 detailed test cases cover all seven user stories.
+
+Aim for the following distribution:
+
+- 60% Negative/Validation: Critical or High priority.
+- 20% Boundary: Medium priority.
+- 20% Positive/Success: Low priority.
+
+For 55 cases, aim for approximately:
+
+- 33 negative/validation cases.
+- 11 boundary cases.
+- 11 positive/success cases.
+
+Use the same priority mapping consistently across all modules and all CSV files that the evaluator consumes.
+
+Derive test cases explicitly from the relevant user story and field validation rule.
+
+Examples:
+
+- US-03 → student name validation.
+- US-04 → mobile and email validation, if supported by the actual user story.
+- US-05 → remaining registration validations, if supported by the actual user story.
+
+These are illustrative mappings only. Read the actual seven user stories and use their real contents.
+
+Ensure every test case has a unique ID and an explicit user story reference.
+
+Do not mark unexecuted cases as passed. Use pending/not executed until actual results are available.
+
+STEP 10 — DEMONSTRATE ITERATIVE REFINEMENT
+
+The evaluator identified insufficient evidence of multiple refinement exchanges.
+
+Perform at least three distinct and documented refinement cycles during this remediation:
+
+Refinement cycle 1: Discovery and gap analysis
+
+- Inspect the existing implementation.
+- Count test methods by module.
+- Identify missing validations.
+- Identify broken TestNG references.
+- Compare CSV distribution with requirements.
+- Save a concise remediation record in an existing project notes file or an appropriate assessment-prompt log, if supported by the workspace.
+
+Refinement cycle 2: Implementation and execution
+
+- Add the missing tests and helpers.
+- Run the relevant module tests.
+- Inspect actual failures.
+- Fix incorrect assertions, request construction, and test setup.
+- Re-run the affected tests.
+- Record the changes and actua
