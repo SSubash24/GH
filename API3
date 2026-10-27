@@ -1,0 +1,94 @@
+URGENT: FINAL ASSESSMENT REMEDIATION — 15 MINUTES LEFT
+
+Act as a senior Java REST Assured assessment remediation engineer. My current score is 24/33. Inspect and MODIFY the existing workspace immediately. Do not rebuild the project or waste time explaining the plan.
+
+Fix ONLY these remaining evaluator failures, in priority order:
+
+1. FIX ALL TEST CASE CSV FILES
+
+Find every assessment-related test-case CSV file and identify which files are submitted or referenced by the evaluator.
+
+Update the authoritative CSV and keep any required duplicate CSV consistent.
+
+Requirements:
+
+- Cover all three modules: Authentication, Register Student, Update Backlog.
+- Explicitly map every test case to its actual user story, US-01 through US-07, using the existing user stories file.
+- Target at least 55 test cases, or preserve a higher existing count.
+- Target at least 60% Negative/Validation cases, approximately 20% Boundary, and approximately 20% Positive/Success.
+- Calculate the actual distribution programmatically; do not guess.
+- Use ONLY these priority values: "Critical", "High", "Medium", "Low".
+- Negative/validation cases: Critical or High.
+- Boundary cases: Medium.
+- Positive/success cases: Low.
+- Populate the Module column correctly for every row.
+- Use consistent column names, user story IDs, and priorities across CSV files.
+- Derive scenarios from the actual seven user stories and the specified API validation rules.
+- Preserve real expected results. Mark unexecuted actual results as "Not Executed"; never fabricate pass/fail results.
+
+Validation rules include name length/characters, 10-digit mobile number, email format, CGPA 0–10, mandatory department, non-negative backlog count, authentication failures, and nonexistent roll numbers.
+
+2. FINALIZE DEFECT REPORT DURING AUTOMATION CLEANUP
+
+Inspect the existing TestNG lifecycle, "AfterSuite" teardown, report listener, and "defects/defect_report.json".
+
+Modify the existing cleanup implementation so that after all tests finish it:
+
+- Collects actual execution pass/fail/skip counts.
+- Finalizes and writes "defects/defect_report.json" programmatically.
+- Writes a valid JSON execution summary containing total, passed, failed, and skipped counts.
+- Includes a severity distribution if supported by the confirmed defect records.
+- Flushes the existing HTML report.
+- Clears the authentication token only after dependent reporting/finalization operations have completed.
+- Handles exceptions without silently losing reports.
+
+Use the project's existing JSON library and reporting framework. Do not add unnecessary dependencies or duplicate listeners.
+
+3. COVER DEFECT DOCUMENTATION ACROSS ALL THREE MODULES
+
+The current JSON contains eight Registration-only defects. Inspect actual test results and existing evidence.
+
+Ensure the final defect report has a clear module-wise structure for:
+
+- Authentication
+- Register Student
+- Update Backlog
+
+Include confirmed defects from Authentication and Backlog Update if real execution evidence supports them. Each defect must include the actual available fields required by the assessment: Bug ID, module, user story ID where known, endpoint, HTTP method, request data, expected result/status, actual result/status, severity, priority, reproduction steps, and related test case ID.
+
+Do not simply relabel Registration defects as Authentication or Backlog defects. Do not invent failures, response codes, or execution evidence.
+
+If a module has no confirmed defects, represent that accurately in the report and include the tests executed for that module in the execution summary.
+
+4. ADD THE THIRD DISTINCT REFINEMENT CYCLE
+
+Create a concise, persistent assessment prompt/refinement log in an existing appropriate notes file, or a small dedicated file if none exists.
+
+Record three distinct cycles:
+
+1. Initial gap discovery.
+2. Implementation and test execution.
+3. Final feedback-driven refinement of CSV distribution, user story traceability, and report finalization.
+
+Record only actions that actually occurred. Do not claim an evaluator interaction that did not happen.
+
+5. VERIFY EVERYTHING IMMEDIATELY
+
+Run the fastest relevant checks first, then the complete existing Maven/TestNG suite if time permits.
+
+Verify:
+
+- All seven user stories are mapped.
+- CSV priorities use Critical/High/Medium/Low only.
+- Negative/validation distribution is at least 60%, where achievable without misclassifying scenarios.
+- Module column is populated in every row.
+- All three modules are represented in the defect report and execution summary.
+- "defects/defect_report.json" is valid JSON.
+- The report is finalized programmatically by teardown, not just a static manually created file.
+- HTML reporting is flushed.
+- No TestNG method references are broken.
+- The project still compiles and tests run.
+
+Preserve valid existing code and filenames. Do not fabricate defects or test results.
+
+START NOW. Make the smallest high-impact changes directly in the workspace, run verification, and summarize changed files and actual results. Do not stop at recommendations or a plan.
